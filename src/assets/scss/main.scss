@@ -1,0 +1,28 @@
+$base-color: darkcyan;
+$white-color: white;
+$light-color: #ebebeb;
+$dark-color: #444444;
+
+$shadow: 5px 5px 10px 5px $dark-color;
+
+html, body {
+}
+.color{
+  &-light {
+    color: $white-color;
+  }
+  &-dark {
+    color: $dark-color;
+  }
+}
+.background {
+  &-base {
+    background-color: $base-color;
+  }
+}
+.border-radius {
+  border-radius: 5px;
+}
+.shadow {
+  box-shadow: $shadow;
+}
