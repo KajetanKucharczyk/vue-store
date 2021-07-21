@@ -18,7 +18,7 @@
     </b-container>
     <b-container>
       <b-row v-for="data in filteredSourceItems" v-bind:key="data.id" v-on:click="route(data)">
-        <component v-bind:is="component" v-bind="{navigate, data}" />
+        <component v-bind:is="component" v-bind="{data}" />
       </b-row>
       <b-row>
         <ul class="paginator">
@@ -35,7 +35,7 @@
 
 <script>
 
-import ProductPreview from "@/components/ProductPreview";
+import ProductPreview from "@/components/layout/pages/ProductPreview";
 
 export default {
   name: "Paginator",
@@ -46,10 +46,6 @@ export default {
     },
     sourceItems: {
       type: Array,
-      required: true
-    },
-    navigate: {
-      type: Function,
       required: true
     },
     fallback: {
@@ -76,7 +72,6 @@ export default {
   methods: {
     route: function(product) {
       this.fallback(product)
-      this.navigate("product")
     },
     loadPage: function(page) {
       window.scrollTo({

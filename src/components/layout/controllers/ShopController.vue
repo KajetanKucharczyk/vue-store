@@ -1,26 +1,53 @@
 <template>
   <div id="app">
+
     <header>
-      <Header v-bind:siteName="siteName" v-bind:cart="cart" v-bind:navigate="navigate" />
+      <Header
+          v-bind:siteName="siteName"
+          v-bind:cart="cart"
+      />
     </header>
-    <main v-if="this.route.currentRoute === 'products-index'">
-      <ProductsList v-bind:products="products" v-bind:navigate="navigate" v-bind:setCurrentProduct="setCurrentProduct" />
+
+    <main v-if="getRoute === 'index'">
+      <Index />
     </main>
-    <main v-else-if="this.route.currentRoute === 'products-details'">
-      <Product v-bind:productData="getProduct" v-bind:addToCart="addtoCart" v-bind:canAddToCart="canAddToCart" v-bind:availableItems="availableItems" v-bind:navigate="navigate" />
+
+    <main v-else-if="getRoute === 'products-index'">
+      <ProductsList
+          v-bind:products="products"
+          v-bind:setCurrentProduct="setCurrentProduct"
+      />
     </main>
-    <main v-else-if="this.route.currentRoute === 'cart-index'">
-      <Cart v-bind:removeFromCart="removeFromCart" v-bind:products="products" v-bind:cart="cart" v-bind:navigate="navigate" />
+
+    <main v-else-if="getRoute === 'products-details'">
+      <Product
+          v-bind:products="products"
+          v-bind:addToCart="addtoCart"
+          v-bind:canAddToCart="canAddToCart"
+          v-bind:availableItems="availableItems"
+      />
     </main>
-    <main v-else-if="this.route.currentRoute === 'form'">
-      <Form v-bind:navigate="navigate" />
+
+    <main v-else-if="getRoute === 'cart-index'">
+      <Cart
+          v-bind:removeFromCart="removeFromCart"
+          v-bind:products="products"
+          v-bind:cart="cart"
+      />
     </main>
+
+    <main v-else-if="getRoute === 'form'">
+      <Form />
+    </main>
+
     <main v-else>
-      404
+      <PageNotFound />
     </main>
+
     <footer>
       <Footer />
     </footer>
+
   </div>
 </template>
 
@@ -31,9 +58,11 @@ import Cart from '@/components/layout/pages/Cart.vue'
 import Form from "@/components/layout/pages/Form"
 import ProductsList from "@/components/layout/pages/ProductsList";
 import Footer from "@/components/layout/page-partials/Footer"
+import Index from "@/components/layout/pages/Index"
+import PageNotFound from "@/components/layout/pages/PageNotFound"
 
 export default {
-  name: 'Main',
+  name: 'ShopController',
   components: {
     Header,
     Footer,
@@ -41,6 +70,8 @@ export default {
     Product,
     Cart,
     Form,
+    Index,
+    PageNotFound
   },
   data () {
     return {
@@ -48,11 +79,12 @@ export default {
       currentProduct: null,
       siteName: "SKLEPik",
       cart: [],
-      routes: ['products-index', 'products-details', 'cart-index'],
-      route: {
-        currentRoute: 'products-index',
-        history: ['products-details']
-      }
+    }
+  },
+  props: {
+    route: {
+      type: String,
+      default: () => "index"
     }
   },
   methods: {
@@ -65,14 +97,6 @@ export default {
     availableItems: function(product) {
       return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
     },
-    navigate: function(type) {
-      if(type === 'header') this.route.currentRoute = this.route.currentRoute === 'cart-index' ? this.route.history[this.route.history.length - 2] : 'cart-index';
-      if(type === "back-to-product-list") this.route.currentRoute = 'products-index'
-      if(type === "form") this.route.currentRoute = 'form'
-      if(type === "home") this.route.currentRoute = 'products-index'
-      if(type === "product") this.route.currentRoute = 'products-details'
-      this.route.history.push(this.route.currentRoute)
-    },
     setCurrentProduct: function(product) {
       this.currentProduct = product.id
     },
@@ -81,8 +105,8 @@ export default {
     },
   },
   computed: {
-    getProduct: function() {
-      return this.products.find(arrayElement => arrayElement.id === this.currentProduct)
+    getRoute: function() {
+      return this.route
     }
   },
   created() {

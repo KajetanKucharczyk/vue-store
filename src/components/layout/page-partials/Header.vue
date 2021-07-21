@@ -16,7 +16,7 @@
 <script>
 export default {
   name: "Header",
-  props: ['navigate', 'siteName', 'cart'],
+  props: ['siteName', 'cart'],
   computed: {
     cartQuantity: function() {
       return this.cart.length
@@ -24,10 +24,14 @@ export default {
   },
   methods: {
     route: function() {
-      this.navigate('header')
+      this.$router.push({
+        name: 'cart'
+      });
     },
     routeHome: function() {
-      this.navigate('home')
+      this.$router.push({
+        name: 'home'
+      });
     }
   }
 }

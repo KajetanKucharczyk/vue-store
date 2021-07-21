@@ -65,7 +65,7 @@ import Button from "@/components/Button";
 
 export default {
   name: "Cart",
-  props: ['navigate', 'cart', 'products', 'removeFromCart'],
+  props: ['cart', 'products', 'removeFromCart'],
   components: {
     Button
   },
@@ -73,11 +73,16 @@ export default {
     return {}
   },
   methods: {
+
     routeForm: function() {
-      this.navigate('form')
+      this.$router.push({
+        name: 'form'
+      });
     },
     routeHome: function() {
-      this.navigate('home')
+      this.$router.push({
+        name: 'home'
+      });
     },
     getItems: function(items) {
       return this.products.filter(item => {

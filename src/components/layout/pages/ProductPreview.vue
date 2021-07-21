@@ -1,5 +1,6 @@
 <template>
-  <div class="product border-radius shadow color-dark">
+  <router-link v-bind:to="{name: 'product', params: {id: data.id, route: 'products-details'}}">
+    <div class="product border-radius shadow color-dark">
     <b-container>
       <b-row>
         <b-col cols="12" md="4">
@@ -22,16 +23,16 @@
         </b-col>
       </b-row>
     </b-container>
-  </div>
+    </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   name: "ProductPreview",
-  props: ['data', 'navigate'],
+  props: ['data'],
   methods: {
     _imageParser: function(product) {
-      //require(product.image.src);
       return product.image.src
     }
   },
