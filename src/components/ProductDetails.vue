@@ -2,44 +2,86 @@
   <div class="product color-dark">
     <b-container>
       <b-row class="product__header">
-        <b-col cols="12" md="4">
+        <b-col
+            cols="12"
+            md="4"
+        >
         </b-col>
-        <b-col cols="12" md="8">
+        <b-col
+            cols="12"
+            md="8"
+        >
           <h2>{{products[this.$route.params.id].name}}</h2>
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="12" md="4">
+        <b-col
+            cols="12"
+            md="4"
+        >
           <div class="product__image-container">
-            <img class="product__image border-radius shadow" v-bind:src="_imageParser(products[this.$route.params.id])" v-bind:alt="products[this.$route.params.id].image.alt" />
-            <BaseButton class="product__back-button" v-bind:clickFunction="routeHome">
+            <img
+                class="product__image border-radius shadow"
+                v-bind:src="_imageParser(products[this.$route.params.id])"
+                v-bind:alt="products[this.$route.params.id].image.alt"
+            />
+            <BaseButton
+                class="product__back-button"
+                v-bind:clickFunction="routeHome"
+            >
               Powrót
             </BaseButton>
           </div>
         </b-col>
-        <b-col cols="12" md="8">
+        <b-col
+            cols="12"
+            md="8"
+        >
           <b-container>
             <b-row class="product__short-desc">
-              <h4>{{products[this.$route.params.id].shortDesc}}</h4>
+              <h4>
+                {{products[this.$route.params.id].shortDesc}}
+              </h4>
             </b-row>
             <b-row class="product__desc">
-              <p>{{products[this.$route.params.id].desc}}</p>
+              <p>
+                {{products[this.$route.params.id].desc}}
+              </p>
             </b-row>
             <b-row class="product__price">
-              <p>{{products[this.$route.params.id].price | formatPrice}}</p>
+              <p>
+                {{products[this.$route.params.id].price | formatPrice}}
+              </p>
             </b-row>
           </b-container>
         </b-col>
       </b-row>
     </b-container>
-    <BaseButton v-bind:clickFunction="() => addToCart(products[this.$route.params.id].id)" v-bind:updateVisible="() => canAddToCart(products[this.$route.params.id])">
-      <span v-if="_lastPieces">Ostatnie sztuki (zostało {{_countAvailableItems}})</span>
-      <span v-else-if="_lastPiece">Ostatnia sztuka</span>
-      <span v-else-if="_empty">Brak wystarczającej ilośći produktów na stanie</span>
-      <span v-else>Dodaj do koszyka (zostało {{_countAvailableItems}})</span>
-    </BaseButton>
-  </div>
 
+    <BaseButton
+        v-bind:clickFunction="() => addToCart(products[this.$route.params.id].id)"
+        v-bind:updateVisible="() => canAddToCart(products[this.$route.params.id])"
+    >
+
+      <span v-if="_lastPieces">
+        Ostatnie sztuki (zostało {{_countAvailableItems}})
+      </span>
+
+      <span v-else-if="_lastPiece">
+        Ostatnia sztuka
+      </span>
+
+      <span v-else-if="_empty">
+        Brak wystarczającej ilośći produktów na stanie
+      </span>
+
+      <span v-else>
+        Dodaj do koszyka (zostało {{_countAvailableItems}})
+      </span>
+
+    </BaseButton>
+
+  </div>
 </template>
 
 <script>
