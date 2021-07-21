@@ -12,9 +12,9 @@
         <b-col cols="12" md="4">
           <div class="product__image-container">
             <img class="product__image border-radius shadow" v-bind:src="_imageParser(products[this.$route.params.id])" v-bind:alt="products[this.$route.params.id].image.alt" />
-            <Button class="product__back-button" v-bind:clickFunction="routeHome">
+            <BaseButton class="product__back-button" v-bind:clickFunction="routeHome">
               Powrót
-            </Button>
+            </BaseButton>
           </div>
         </b-col>
         <b-col cols="12" md="8">
@@ -62,7 +62,7 @@ export default {
       required: true
     },
     availableItems: {
-      type: Number,
+      type: Function,
       required: true
     }
   },

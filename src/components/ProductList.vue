@@ -13,7 +13,16 @@ import BasePaginator from "@/components/BasePaginator";
 
 export default {
   name: "ProductList",
-  props: ['products', 'setCurrentProduct'],
+  props: {
+    products: {
+      type: Array,
+      required: true
+    },
+    setCurrentProduct: {
+      type: Function,
+      required: true
+    }
+  },
   data() {
     return {
       component: "Product",

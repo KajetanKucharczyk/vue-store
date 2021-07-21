@@ -30,7 +30,7 @@ export default {
   name: "Product",
   props: {
     data: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
