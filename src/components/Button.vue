@@ -1,9 +1,17 @@
 <template>
   <div>
-    <button v-if="_updateVisible" v-on:click="_clickFunction" v-on:submit="_submitFunction" class="button border-radius background-base color-light d-flex justify-content-center align-items-center shadow">
+    <button
+        v-if="updateVisible"
+        v-on:click="clickFunction"
+        v-on:submit="submitFunction"
+        class="button border-radius background-base color-light d-flex justify-content-center align-items-center shadow"
+    >
       <slot></slot>
     </button>
-    <button v-else class="button border-radius background-base color-light d-flex justify-content-center align-items-center disabled">
+    <button
+        v-else
+        class="button border-radius background-base color-light d-flex justify-content-center align-items-center disabled"
+    >
       <slot></slot>
     </button>
   </div>
@@ -12,30 +20,19 @@
 <script>
 export default {
   name: 'Button',
-  props: ['updateVisible', 'clickFunction', 'submitFunction'],
-  methods: {
-    _submitFunction: function() {
-      this._validateFunction(this.submitFunction, false)
+  props: {
+    updateVisible: {
+      type: Function,
+      default: () => false
     },
-    _clickFunction: function() {
-      this._validateFunction(this.clickFunction, false)
+    clickFunction: {
+      type: Function,
+      default: () => false
     },
-    _validateFunction: function(fn, _return = true) {
-      if(_return) {
-        if(typeof fn === 'function')
-          return fn()
-        else
-          return true
-      } else {
-        if(typeof fn === 'function')
-          fn()
-      }
-    }
-  },
-  computed: {
-    _updateVisible: function() {
-      return this._validateFunction(this.updateVisible)
-    }
+    submitFunction: {
+      type: Function,
+      default: () => false
+    },
   }
 }
 </script>
