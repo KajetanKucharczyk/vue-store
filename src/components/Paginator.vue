@@ -4,6 +4,7 @@
       <b-row>
         <b-col>
           <b-form-select class="sort-select border-radius shadow color-dark" v-model="currentSortType" v-bind:options="sortOptions"></b-form-select>
+          <b-form-select class="per-page-select border-radius shadow color-dark" v-model="perPage" v-bind:options="perPageOptions"></b-form-select>
         </b-col>
       </b-row>
     </b-container>
@@ -61,6 +62,10 @@ export default {
     sort: {
       type: Array,
       default: () => []
+    },
+    defaultPerPage: {
+      type: Number,
+      default: () => 5
     }
   },
   methods: {
@@ -81,7 +86,7 @@ export default {
   },
   data() {
     return {
-      perPage: 5,
+      perPage: this.defaultPerPage,
       currentPage: 0,
       currentSortType: this.sortDefault,
     }
@@ -110,6 +115,22 @@ export default {
         })
       })
       return _sortOptions
+    },
+    perPageOptions: () => {
+      return [
+        {
+          value: 5,
+          text: '5'
+        },
+        {
+          value: 10,
+          text: '10'
+        },
+        {
+          value: 100,
+          text: '100'
+        },
+      ]
     },
     filteredSourceItems: function() {
       let compare;
@@ -142,7 +163,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .sort-select {
+  .sort-select, .per-page-select {
     width: 100%;
     max-width: 300px;
     height: 50px;
@@ -157,6 +178,11 @@ export default {
     &::-ms-expand {
       display: none;
     }
+  }
+
+  .per-page-select {
+    max-width: 75px;
+    text-align: center;
   }
 
   .paginator {
