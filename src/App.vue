@@ -22,15 +22,14 @@
 
     </footer>
   </div>
-
 </template>
 
 <script>
-import Product from './components/Product.vue'
-import Header from './components/Header.vue'
-import Cart from './components/Cart.vue'
-import Form from "@/components/Form"
-import ProductsList from "@/components/ProductsList";
+import Product from './components/layout/pages/Product.vue'
+import Header from './components/layout/page-partials/Header.vue'
+import Cart from './components/layout/pages/Cart.vue'
+import Form from "@/components/layout/pages/Form"
+import ProductsList from "@/components/layout/pages/ProductsList";
 
 export default {
   name: 'App',
