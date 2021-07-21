@@ -3,12 +3,23 @@
     <b-row>
       INDEX
     </b-row>
+    <b-row>
+      <router-link v-bind:to="{name: 'products'}">
+        <Button>Zobacz wszystkie produkty</Button>
+      </router-link>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+
+import Button from "@/components/Button"
+
 export default {
-  name: "Index"
+  name: "Index",
+  components: {
+    Button
+  }
 }
 </script>
 
