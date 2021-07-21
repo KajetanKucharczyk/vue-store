@@ -1,6 +1,5 @@
 <template>
-  <router-link v-bind:to="{name: 'product', params: {id: data.id, route: 'products-details'}}">
-    <div class="product border-radius shadow color-dark">
+  <router-link v-bind:to="{name: 'product', params: {id: data.id, route: 'products-details'}}" class="product border-radius shadow color-dark">
     <b-container>
       <b-row>
         <b-col cols="12" md="4">
@@ -23,7 +22,6 @@
         </b-col>
       </b-row>
     </b-container>
-    </div>
   </router-link>
 </template>
 
@@ -75,6 +73,7 @@ export default {
   border: 1px solid $dark-color;
   transition: 0.2s background-color ease-in-out;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background-color: $light-color;
