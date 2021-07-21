@@ -13,7 +13,7 @@
 
 <script>
 
-import Button from "@/components/Button"
+import Button from "@/components/BaseButton"
 
 export default {
   name: "Index",

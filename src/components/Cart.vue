@@ -61,11 +61,24 @@
 
 <script>
 
-import Button from "@/components/Button";
+import Button from "@/components/BaseButton";
 
 export default {
   name: "Cart",
-  props: ['cart', 'products', 'removeFromCart'],
+  props: {
+    cart: {
+      type: Array,
+      default: () => []
+    },
+    products: {
+      type: Array,
+      required: true
+    },
+    removeFromCart: {
+      type: Function,
+      default: () => false
+    }
+  },
   components: {
     Button
   },

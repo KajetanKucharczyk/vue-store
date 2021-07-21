@@ -35,10 +35,10 @@
 
 <script>
 
-import ProductPreview from "@/components/layout/pages/ProductPreview";
+import Product from "@/components/Product";
 
 export default {
-  name: "Paginator",
+  name: "BasePaginator",
   props: {
     component: {
       type: String,
@@ -82,7 +82,7 @@ export default {
     }
   },
   components: {
-    ProductPreview
+    Product
   },
   data() {
     return {

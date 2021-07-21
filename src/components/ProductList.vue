@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <Paginator
+    <BasePaginator
         v-bind="{component, sortDefault, sort}"
         v-bind:sourceItems="products"
         v-bind:fallback="_setCurrentProduct"
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import Paginator from "@/components/Paginator";
+import BasePaginator from "@/components/BasePaginator";
 
 export default {
-  name: "ProductsList",
+  name: "ProductList",
   props: ['products', 'setCurrentProduct'],
   data() {
     return {
-      component: "ProductPreview",
+      component: "Product",
       sortDefault: 'name-asc',
       sort: [
         {
@@ -38,7 +38,7 @@ export default {
     }
   },
   components: {
-    Paginator,
+    BasePaginator,
   },
   methods: {
     _setCurrentProduct: function(product) {

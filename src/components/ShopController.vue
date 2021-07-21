@@ -1,19 +1,19 @@
 <template>
   <div id="app">
 
-    <header>
-      <Header
+    <main>
+      <BaseHeader
           v-bind:siteName="siteName"
           v-bind:cart="cart"
       />
-    </header>
+    </main>
 
     <main v-if="getRoute === 'index'">
       <Index />
     </main>
 
     <main v-else-if="getRoute === 'products-index'">
-      <ProductsList
+      <ProductList
           v-bind:products="products"
           v-bind:setCurrentProduct="setCurrentProduct"
       />
@@ -41,37 +41,37 @@
     </main>
 
     <main v-else>
-      <PageNotFound />
+      <Error />
     </main>
 
     <footer>
-      <Footer />
+      <BaseFooter />
     </footer>
 
   </div>
 </template>
 
 <script>
-import Product from '@/components/layout/pages/Product.vue'
-import Header from '@/components/layout/page-partials/Header.vue'
-import Cart from '@/components/layout/pages/Cart.vue'
-import Form from "@/components/layout/pages/Form"
-import ProductsList from "@/components/layout/pages/ProductsList";
-import Footer from "@/components/layout/page-partials/Footer"
-import Index from "@/components/layout/pages/Index"
-import PageNotFound from "@/components/layout/pages/PageNotFound"
+import Product from '@/components/ProductDetails.vue'
+import BaseHeader from '@/components/BaseHeader.vue'
+import Cart from '@/components/Cart.vue'
+import Form from "@/components/Form"
+import ProductList from "@/components/ProductList";
+import BaseFooter from "@/components/BaseFooter"
+import Index from "@/components/Index"
+import Error from "@/components/Error"
 
 export default {
   name: 'ShopController',
   components: {
-    Header,
-    Footer,
-    ProductsList,
+    BaseHeader,
+    BaseFooter,
+    ProductList,
     Product,
     Cart,
     Form,
     Index,
-    PageNotFound
+    Error
   },
   data () {
     return {

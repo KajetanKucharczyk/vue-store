@@ -32,25 +32,42 @@
         </b-col>
       </b-row>
     </b-container>
-    <Button v-bind:clickFunction="() => addToCart(products[this.$route.params.id].id)" v-bind:updateVisible="() => canAddToCart(products[this.$route.params.id])">
+    <BaseButton v-bind:clickFunction="() => addToCart(products[this.$route.params.id].id)" v-bind:updateVisible="() => canAddToCart(products[this.$route.params.id])">
       <span v-if="_lastPieces">Ostatnie sztuki (zostało {{_countAvailableItems}})</span>
       <span v-else-if="_lastPiece">Ostatnia sztuka</span>
       <span v-else-if="_empty">Brak wystarczającej ilośći produktów na stanie</span>
       <span v-else>Dodaj do koszyka (zostało {{_countAvailableItems}})</span>
-    </Button>
+    </BaseButton>
   </div>
 
 </template>
 
 <script>
 
-import Button from "@/components/Button";
+import BaseButton from "@/components/BaseButton";
 
 export default {
-  name: 'Product',
-  props: ['products', 'addToCart', 'canAddToCart', 'availableItems'],
+  name: 'ProductDetails',
+  props: {
+    products: {
+      type: Array,
+      required: true
+    },
+    addToCart: {
+      type: Function,
+      required: true
+    },
+    canAddToCart: {
+      type: Function,
+      required: true
+    },
+    availableItems: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
-    Button
+    BaseButton
   },
   filters: {
     formatPrice: function(price) {

@@ -27,8 +27,13 @@
 
 <script>
 export default {
-  name: "ProductPreview",
-  props: ['data'],
+  name: "Product",
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
   methods: {
     _imageParser: function(product) {
       return product.image.src

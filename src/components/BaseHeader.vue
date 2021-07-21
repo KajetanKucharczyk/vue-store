@@ -15,8 +15,16 @@
 
 <script>
 export default {
-  name: "Header",
-  props: ['siteName', 'cart'],
+  name: "BaseHeader",
+  props: {
+    siteName: {
+      type: String
+    },
+    cart: {
+      type: Array,
+      default: () => []
+    }
+  },
   computed: {
     cartQuantity: function() {
       return this.cart.length
