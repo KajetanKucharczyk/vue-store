@@ -1,6 +1,13 @@
 <template>
   <b-container>
-    <Paginator v-bind:component="component" v-bind:sourceItems="products" v-bind:navigate="navigate" v-bind:fallback="_setCurrentProduct" />
+    <Paginator
+        v-bind:component="component"
+        v-bind:sourceItems="products"
+        v-bind:navigate="navigate"
+        v-bind:fallback="_setCurrentProduct"
+        v-bind:sortDefault="sortDefault"
+        v-bind:sort="sort"
+    />
   </b-container>
 </template>
 
@@ -12,17 +19,26 @@ export default {
   props: ['products', 'navigate', 'setCurrentProduct'],
   data() {
     return {
-      component: "ProductPreview"
+      component: "ProductPreview",
+      sortDefault: 'name-asc',
+      sort: [
+        {
+          field: 'id',
+          textAsc: 'Indeks rosnąco',
+          textDesc: 'Indeks malejąco'
+        },
+        {
+          field: 'name',
+          textAsc: 'Alfabetycznie rosnąco',
+          textDesc: 'Alfabetycznie malejąco'
+        }
+      ]
     }
   },
   components: {
     Paginator,
   },
   methods: {
-    routeProduct: function(product) {
-      this._setCurrentProduct(product)
-      this.navigate("product")
-    },
     _setCurrentProduct: function(product) {
       this.setCurrentProduct(product)
     }

@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-form-select class="sort-select border-radius shadow color-dark" v-model="sortType" v-bind:options="sortOptions"></b-form-select>
+          <b-form-select class="sort-select border-radius shadow color-dark" v-model="currentSortType" v-bind:options="sortOptions"></b-form-select>
         </b-col>
       </b-row>
     </b-container>
@@ -45,9 +45,15 @@ export default {
     },
     fallback: {
       type: Function,
-      default: function() {
-        return false
-      }
+      default: () => false
+    },
+    sortDefault: {
+      type: String,
+      default: () => 'id-asc'
+    },
+    sort: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {
@@ -70,13 +76,7 @@ export default {
     return {
       perPage: 5,
       currentPage: 0,
-      sortType: 'alpha-asc',
-      sortOptions: [
-        { value: 'alpha-asc', text: 'Alfabetycznie rosnąco' },
-        { value: 'alpha-desc', text: 'Alfabetycznie malejąco' },
-        { value: 'index-asc', text: 'Indeks rosnąco' },
-        { value: 'index-desc', text: 'Indeks malejąco' },
-      ]
+      currentSortType: this.sortDefault,
     }
   },
   computed: {
@@ -90,48 +90,41 @@ export default {
       let additionalPage = this.sourceItems.length % this.perPage > 0 ? 1 : 0
       return parseInt(this.sourceItems.length / this.perPage) + additionalPage
     },
+    sortOptions: function() {
+      let _sortOptions = []
+      this.sort.map((a) => {
+        _sortOptions.push({
+          value: a.field + "-asc",
+          text: a.textAsc
+        })
+        _sortOptions.push({
+          value: a.field + "-desc",
+          text: a.textDesc
+        })
+      })
+      return _sortOptions
+    },
     filteredSourceItems: function() {
-
       let compare;
-
-      switch (this.sortType) {
-        case "alpha-asc":
-          compare = function(a, b) {
-            if(a.name < b.name)
-              return -1
-            if(b.name < a.name)
-              return 1
-            return 0
+      this.sort.forEach(el => {
+        if(this.currentSortType.indexOf('-asc') !== -1) {
+          if((el.field + '-asc') === this.currentSortType) {
+            compare = function (a, b) {
+              if (a[el.field] < b[el.field]) return -1
+              if (b[el.field] < a[el.field]) return 1
+              return 0
+            }
           }
-        break;
-        case "alpha-desc":
-          compare = function(a, b) {
-            if(a.name > b.name)
-              return -1
-            if(b.name > a.name)
-              return 1
-            return 0
+        } else if(this.currentSortType.indexOf('-desc') !== -1) {
+          if((el.field + '-desc') === this.currentSortType) {
+            compare = function (a, b) {
+              if (a[el.field] > b[el.field]) return -1
+              if (b[el.field] > a[el.field]) return 1
+              return 0
+            }
           }
-          break;
-        case "index-asc":
-          compare = function(a, b) {
-            if(a.id < b.id)
-              return -1
-            if(b.id < a.id)
-              return 1
-            return 0
-          }
-          break;
-        case "index-desc":
-          compare = function(a, b) {
-            if(a.id > b.id)
-              return -1
-            if(b.id > a.id)
-              return 1
-            return 0
-          }
-          break;
-      }
+        }
+      })
 
       return this.sourceItems.slice().sort(compare).filter((item, key) => {
         return key >= this.perPage * this.getCurrentPage && key < this.getCurrentRange
