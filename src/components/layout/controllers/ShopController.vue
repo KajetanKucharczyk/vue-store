@@ -110,9 +110,16 @@ export default {
     }
   },
   created() {
-    fetch("./products.json")
-        .then(response => response.json())
-        .then(data => this.products = data.products);
+    // pobranie zawartości z pliku JSON lub z obiektu localStorage
+    if(window.localStorage.getItem('products'))
+      this.products = JSON.parse(window.localStorage.getItem('products'))
+    else
+      fetch("./products.json")
+          .then(response => response.json())
+          .then(data => {
+            localStorage.setItem('products', JSON.stringify(data.products))
+            this.products = data.products
+          });
   }
 }
 </script>
