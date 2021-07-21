@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container>
+    <b-container v-if="!disableSort">
       <b-row>
         <b-col>
           <b-form-select class="sort-select border-radius shadow color-dark" v-model="currentSortType" v-bind:options="sortOptions"></b-form-select>
@@ -8,8 +8,11 @@
       </b-row>
     </b-container>
     <b-container>
-      <b-row v-for="item in filteredSourceItems" v-bind:key="item.id" v-on:click="route(item)">
-        <component v-bind:is="component" v-bind:navigate="navigate" v-bind:data="item"></component>
+      <b-row v-for="data in filteredSourceItems" v-bind:key="data.id" v-on:click="route(data)">
+        <component
+            v-bind:is="component"
+            v-bind="{navigate, data}"
+        ></component>
       </b-row>
       <b-row>
         <ul class="paginator">
@@ -45,6 +48,10 @@ export default {
     },
     fallback: {
       type: Function,
+      default: () => false
+    },
+    disableSort: {
+      type: Boolean,
       default: () => false
     },
     sortDefault: {

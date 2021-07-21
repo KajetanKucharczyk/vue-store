@@ -1,12 +1,9 @@
 <template>
   <b-container>
     <Paginator
-        v-bind:component="component"
+        v-bind="{component, navigate, sortDefault, sort}"
         v-bind:sourceItems="products"
-        v-bind:navigate="navigate"
         v-bind:fallback="_setCurrentProduct"
-        v-bind:sortDefault="sortDefault"
-        v-bind:sort="sort"
     />
   </b-container>
 </template>
@@ -31,6 +28,11 @@ export default {
           field: 'name',
           textAsc: 'Alfabetycznie rosnąco',
           textDesc: 'Alfabetycznie malejąco'
+        },
+        {
+          field: 'price',
+          textAsc: 'Ceny rosnąco',
+          textDesc: 'Ceny malejąco'
         }
       ]
     }
