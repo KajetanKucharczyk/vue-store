@@ -3,17 +3,22 @@
     <b-container v-if="!disableSort">
       <b-row>
         <b-col>
-          <b-form-select class="sort-select border-radius shadow color-dark" v-model="currentSortType" v-bind:options="sortOptions"></b-form-select>
-          <b-form-select class="per-page-select border-radius shadow color-dark" v-model="perPage" v-bind:options="perPageOptions"></b-form-select>
+          <b-form-select
+              class="sort-select border-radius shadow color-dark custom-select"
+              v-model="currentSortType"
+              v-bind:options="sortOptions"
+          />
+          <b-form-select
+              class="per-page-select border-radius shadow color-dark custom-select"
+              v-model="perPage"
+              v-bind:options="perPageOptions"
+          />
         </b-col>
       </b-row>
     </b-container>
     <b-container>
       <b-row v-for="data in filteredSourceItems" v-bind:key="data.id" v-on:click="route(data)">
-        <component
-            v-bind:is="component"
-            v-bind="{navigate, data}"
-        ></component>
+        <component v-bind:is="component" v-bind="{navigate, data}" />
       </b-row>
       <b-row>
         <ul class="paginator">
@@ -169,11 +174,12 @@ export default {
     height: 50px;
     margin-top: 25px;
     margin-left: 5px;
-    padding-left: 20px;
+    text-align-last: center;
     -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
+    cursor: pointer;
 
     &::-ms-expand {
       display: none;
