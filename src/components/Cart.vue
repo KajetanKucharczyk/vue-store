@@ -91,16 +91,15 @@
     <b-row>
 
       <Button
-          v-if="anyItem" v-bind:clickFunction="() => $router.push({name: 'form'}).catch(() => {})"
-          v-bind:updateVisible="() => {return true}"
+          v-if="anyItem"
+          v-bind:clickFunction="() => route('form')"
       >
         Finalizuj zamówienie
       </Button>
 
       <Button
           v-else
-          v-bind:clickFunction="() => $router.back()"
-          v-bind:updateVisible="() => {return true}"
+          v-bind:clickFunction="() => routeBack"
       >
         Powrót
       </Button>
@@ -114,8 +113,11 @@
 
 import Button from "@/components/BaseButton";
 
+import router from "@/mixins/router";
+
 export default {
   name: "Cart",
+  mixins: [router],
   props: {
     cart: {
       type: Array,

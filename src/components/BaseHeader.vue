@@ -1,21 +1,29 @@
 <template>
   <div class="header background-base">
-    <div class="name color-light" v-on:click="$router.push({name: 'home'}).catch(() => {})">
+    <div
+        class="name color-light"
+        v-on:click="route('home')"
+    >
       {{siteName}}
     </div>
 
-    <div class="cart" v-if="!cartQuantity" v-on:click="$router.push({name: 'cart'}).catch(() => {})">
-      Koszyk pusty
-    </div>
-    <div class="cart" v-else v-on:click="$router.push({name: 'cart'}).catch(() => {})">
-      W koszyku: {{cartQuantity}}
-    </div>
+    <HeaderCart v-bind:cartQuantity="cartQuantity" />
+
   </div>
 </template>
 
 <script>
+
+import HeaderCart from "@/components/HeaderCart";
+
+import router from "@/mixins/router";
+
 export default {
   name: "BaseHeader",
+  mixins: [router],
+  components: {
+    HeaderCart
+  },
   props: {
     siteName: {
       type: String
@@ -47,16 +55,6 @@ export default {
     .name {
       font-weight: bold;
       font-size: 30px;
-      cursor: pointer;
-    }
-    .cart {
-      border-radius: 5px;
-      background-color: white;
-      width: 200px;
-      height: 75%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
     }
   }

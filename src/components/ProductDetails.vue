@@ -27,7 +27,7 @@
             />
             <BaseButton
                 class="product__back-button"
-                v-bind:clickFunction="() => $router.push({name: 'products'}).catch(() => {})"
+                v-bind:clickFunction="() => route('products')"
             >
               Powrót
             </BaseButton>
@@ -88,8 +88,11 @@
 
 import BaseButton from "@/components/BaseButton";
 
+import router from "@/mixins/router";
+
 export default {
   name: 'ProductDetails',
+  mixins: [router],
   components: {
     BaseButton
   },
