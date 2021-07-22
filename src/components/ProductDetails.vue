@@ -134,6 +134,9 @@ export default {
     product: function() {
       return this.products.find(el => el.id === parseInt(this.$route.params.id))
     },
+  },
+  created() {
+    document.title = this.product.name
   }
 }
 

@@ -8,6 +8,9 @@ const routes = [
         props: {
             route: "index"
         },
+        meta: {
+            title: "Strona główna"
+        }
     },
     {
         path: '/produkty',
@@ -16,6 +19,9 @@ const routes = [
         props: {
             route: "products-index"
         },
+        meta: {
+            title: "Produkty"
+        }
     },
     {
         path: '/produkty/:id',
@@ -30,6 +36,9 @@ const routes = [
         props: {
             route: "cart-index"
         },
+        meta: {
+            title: "Koszyk"
+        }
     },
     {
         path: '/koszyk/formularz',
@@ -38,6 +47,9 @@ const routes = [
         props: {
             route: "form-index"
         },
+        meta: {
+            title: "Formularz zamówienia"
+        }
     },
     {
         path: "*",
@@ -46,6 +58,9 @@ const routes = [
         props: {
             route: "error-404"
         },
+        meta: {
+            title: "Error 404"
+        }
     }
 ]
 
