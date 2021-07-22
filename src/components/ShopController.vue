@@ -8,18 +8,18 @@
       />
     </main>
 
-    <main v-if="getRoute === 'index'">
+    <main v-if="getRoute === 'home'">
       <Index />
     </main>
 
-    <main v-else-if="getRoute === 'products-index'">
+    <main v-else-if="getRoute === 'products'">
       <ProductList
           v-bind:products="products"
           v-bind:setCurrentProduct="setCurrentProduct"
       />
     </main>
 
-    <main v-else-if="getRoute === 'products-details'">
+    <main v-else-if="getRoute === 'product'">
       <ProductDetails
           v-bind:products="products"
           v-bind:addToCart="addtoCart"
@@ -28,7 +28,7 @@
       />
     </main>
 
-    <main v-else-if="getRoute === 'cart-index'">
+    <main v-else-if="getRoute === 'cart'">
       <Cart
           v-bind:removeFromCart="removeFromCart"
           v-bind:products="products"
@@ -106,7 +106,7 @@ export default {
   },
   computed: {
     getRoute: function() {
-      return this.route
+      return this.$route.name
     }
   },
   created() {

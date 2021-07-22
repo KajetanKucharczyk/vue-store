@@ -1,22 +1,47 @@
 <template>
-  <router-link v-bind:to="{name: 'product', params: {id: data.id, route: 'products-details'}}" class="product border-radius shadow color-dark">
+  <router-link
+      class="product border-radius shadow color-dark"
+      v-bind:to="{
+        name: 'product',
+        params: {
+          id: data.id,
+          route: 'products-details'
+        }
+      }"
+  >
     <b-container>
       <b-row>
-        <b-col cols="12" md="4">
-          <img class="product__image border-radius shadow" v-bind:src="_imageParser(data)" v-bind:alt="data.image.alt" />
+        <b-col
+            cols="12"
+            md="4"
+        >
+          <img
+              class="product__image border-radius shadow"
+              v-bind:src="data.image.src"
+              v-bind:alt="data.image.alt"
+          />
         </b-col>
-        <b-col cols="12" md="8">
+        <b-col
+            cols="12"
+            md="8"
+        >
           <b-container>
             <b-row class="product__header">
               <b-col>
-                <h2>{{data.name}}</h2>
+                <h2>
+                  {{data.name}}
+                </h2>
               </b-col>
             </b-row>
             <b-row>
-              <h4>{{data.shortDesc | shortenDesc(this.previewDescWordCount)}}</h4>
+              <h4>
+                {{data.shortDesc | shortenDesc(this.previewDescWordCount)}}
+              </h4>
             </b-row>
             <b-row class="product__price">
-              <p>{{data.price | formatPrice}}</p>
+              <p>
+                {{data.price | formatPrice}}
+              </p>
             </b-row>
           </b-container>
         </b-col>
@@ -32,11 +57,6 @@ export default {
     data: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    _imageParser: function(product) {
-      return product.image.src
     }
   },
   data() {

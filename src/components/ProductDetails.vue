@@ -27,7 +27,7 @@
             />
             <BaseButton
                 class="product__back-button"
-                v-bind:clickFunction="() => $router.push({name: 'home'}).catch(() => {})"
+                v-bind:clickFunction="() => $router.push({name: 'products'}).catch(() => {})"
             >
               Powrót
             </BaseButton>
@@ -40,17 +40,17 @@
           <b-container>
             <b-row class="product__short-desc">
               <h4>
-                {{product.shortDesc}}
+                {{ product.shortDesc }}
               </h4>
             </b-row>
             <b-row class="product__desc">
               <p>
-                {{product.desc}}
+                {{ product.desc }}
               </p>
             </b-row>
             <b-row class="product__price">
               <p>
-                {{product.price | formatPrice}}
+                {{ product.price | formatPrice }}
               </p>
             </b-row>
           </b-container>
@@ -116,24 +116,24 @@ export default {
   },
   computed: {
     lastPieces: function() {
-      return this.availableItems(this.products[this.$route.params.id]) === 2
+      return this.availableItems(this.product) === 2
     },
     
     lastPiece: function() {
-      return this.availableItems(this.products[this.$route.params.id]) === 1
+      return this.availableItems(this.product) === 1
     },
     
     empty: function() {
-      return this.availableItems(this.products[this.$route.params.id]) === 0
+      return this.availableItems(this.product) === 0
     },
     
     countAvailableItems: function() {
-      return this.availableItems(this.products[this.$route.params.id]);
+      return this.availableItems(this.product);
     },
     
     product: function() {
-      return {...this.products[this.$route.params.id]}
-    }
+      return this.products.find(el => el.id === this.$route.params.id)
+    },
   }
 }
 
