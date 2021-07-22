@@ -132,7 +132,7 @@ export default {
     },
     
     product: function() {
-      return this.products.find(el => el.id === this.$route.params.id)
+      return this.products.find(el => el.id === parseInt(this.$route.params.id))
     },
   }
 }

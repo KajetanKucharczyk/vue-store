@@ -21,10 +21,7 @@ const routes = [
         path: '/produkty/:id',
         name: 'product',
         component: ShopController,
-        props: {
-            id: ":id",
-            route: "products-details"
-        }
+        props: true
     },
     {
         path: '/koszyk',
