@@ -52,8 +52,8 @@
       </b-col>
     </b-row>
     <b-row>
-      <Button v-if="anyItem" v-bind:clickFunction="routeForm" v-bind:updateVisible="() => {return true}">Finalizuj zamówienie</Button>
-      <Button v-else v-bind:clickFunction="routeHome" v-bind:updateVisible="() => {return true}">Powrót</Button>
+      <Button v-if="anyItem" v-bind:clickFunction="() => $router.push({name: 'form'}).catch(() => {})" v-bind:updateVisible="() => {return true}">Finalizuj zamówienie</Button>
+      <Button v-else v-bind:clickFunction="() => $router.push({name: 'home'}).catch(() => {})" v-bind:updateVisible="() => {return true}">Powrót</Button>
     </b-row>
 
   </b-container>
@@ -82,32 +82,21 @@ export default {
   components: {
     Button
   },
-  data() {
-    return {}
-  },
   methods: {
-
-    routeForm: function() {
-      this.$router.push({
-        name: 'form'
-      });
-    },
-    routeHome: function() {
-      this.$router.push({
-        name: 'home'
-      });
-    },
     getItems: function(items) {
       return this.products.filter(item => {
         return items.includes(item.id);
       })
     },
+
     getItem: function(item) {
       return this.products.find(el => el.id === item)
     },
+
     totalProductCount: function(item) {
       return this.cart.filter(el => el === item.id).length
     },
+
     totalProductPrice: function(item) {
       return this.totalProductCount(item) * item.price
     }
@@ -116,26 +105,13 @@ export default {
     cartItems: function() {
       return this.getItems(this.cart)
     },
+
     anyItem: function() {
       return this.cart.length
     },
+
     totalProductsPrice: function() {
       return this.cart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
-    }
-  },
-  filters: {
-    formatPrice: function(price) {
-
-      let aPrice = (100 * price).toFixed(0).split("").reverse();
-      let aString = ""
-
-      aPrice.forEach((element, key) => {
-        aString += element
-        if(key == 1)                      aString += ","
-        if(key > 1 && (key + 2) % 3 == 0) aString += " "
-      })
-
-      return aString.split("").reverse().join('') + " zł";
     }
   },
 }

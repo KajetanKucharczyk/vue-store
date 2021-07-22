@@ -1,13 +1,13 @@
 <template>
   <div class="header background-base">
-    <div class="name color-light" v-on:click="routeHome">
+    <div class="name color-light" v-on:click="$router.push({name: 'home'}).catch(() => {})">
       {{siteName}}
     </div>
 
-    <div class="cart" v-if="!cartQuantity" v-on:click="route">
+    <div class="cart" v-if="!cartQuantity" v-on:click="$router.push({name: 'cart'}).catch(() => {})">
       Koszyk pusty
     </div>
-    <div class="cart" v-else v-on:click="route">
+    <div class="cart" v-else v-on:click="$router.push({name: 'cart'}).catch(() => {})">
       W koszyku: {{cartQuantity}}
     </div>
   </div>
@@ -20,6 +20,7 @@ export default {
     siteName: {
       type: String
     },
+
     cart: {
       type: Array,
       default: () => []
@@ -28,18 +29,6 @@ export default {
   computed: {
     cartQuantity: function() {
       return this.cart.length
-    }
-  },
-  methods: {
-    route: function() {
-      this.$router.push({
-        name: 'cart'
-      });
-    },
-    routeHome: function() {
-      this.$router.push({
-        name: 'home'
-      });
     }
   }
 }

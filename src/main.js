@@ -14,6 +14,7 @@ const router = new Router({
   routes
 })
 
+import "@/filters/priceFormatFilter"
 
 new Vue({
   router,

@@ -11,7 +11,7 @@
             cols="12"
             md="8"
         >
-          <h2>{{products[this.$route.params.id].name}}</h2>
+          <h2>{{ product.name }}</h2>
         </b-col>
       </b-row>
       <b-row>
@@ -22,12 +22,12 @@
           <div class="product__image-container">
             <img
                 class="product__image border-radius shadow"
-                v-bind:src="_imageParser(products[this.$route.params.id])"
-                v-bind:alt="products[this.$route.params.id].image.alt"
+                v-bind:src="product.image.src"
+                v-bind:alt="product.image.alt"
             />
             <BaseButton
                 class="product__back-button"
-                v-bind:clickFunction="routeHome"
+                v-bind:clickFunction="() => $router.push({name: 'home'}).catch(() => {})"
             >
               Powrót
             </BaseButton>
@@ -40,17 +40,17 @@
           <b-container>
             <b-row class="product__short-desc">
               <h4>
-                {{products[this.$route.params.id].shortDesc}}
+                {{product.shortDesc}}
               </h4>
             </b-row>
             <b-row class="product__desc">
               <p>
-                {{products[this.$route.params.id].desc}}
+                {{product.desc}}
               </p>
             </b-row>
             <b-row class="product__price">
               <p>
-                {{products[this.$route.params.id].price | formatPrice}}
+                {{product.price | formatPrice}}
               </p>
             </b-row>
           </b-container>
@@ -59,24 +59,24 @@
     </b-container>
 
     <BaseButton
-        v-bind:clickFunction="() => addToCart(products[this.$route.params.id].id)"
-        v-bind:updateVisible="() => canAddToCart(products[this.$route.params.id])"
+        v-bind:clickFunction="() => addToCart(product.id)"
+        v-bind:updateVisible="() => canAddToCart(product)"
     >
 
-      <span v-if="_lastPieces">
-        Ostatnie sztuki (zostało {{_countAvailableItems}})
+      <span v-if="lastPieces">
+        Ostatnie sztuki (zostało {{countAvailableItems}})
       </span>
 
-      <span v-else-if="_lastPiece">
+      <span v-else-if="lastPiece">
         Ostatnia sztuka
       </span>
 
-      <span v-else-if="_empty">
+      <span v-else-if="empty">
         Brak wystarczającej ilośći produktów na stanie
       </span>
 
       <span v-else>
-        Dodaj do koszyka (zostało {{_countAvailableItems}})
+        Dodaj do koszyka (zostało {{countAvailableItems}})
       </span>
 
     </BaseButton>
@@ -90,64 +90,49 @@ import BaseButton from "@/components/BaseButton";
 
 export default {
   name: 'ProductDetails',
+  components: {
+    BaseButton
+  },
   props: {
     products: {
       type: Array,
       required: true
     },
+    
     addToCart: {
       type: Function,
       required: true
     },
+    
     canAddToCart: {
       type: Function,
       required: true
     },
+    
     availableItems: {
       type: Function,
       required: true
     }
   },
-  components: {
-    BaseButton
-  },
-  filters: {
-    formatPrice: function(price) {
-
-      let aPrice = (100 * price).toFixed(0).split("").reverse();
-      let aString = ""
-
-      aPrice.forEach((element, key) => {
-        aString += element
-        if(key == 1)                      aString += ","
-        if(key > 1 && (key + 2) % 3 == 0) aString += " "
-      })
-
-      return aString.split("").reverse().join('') + " zł";
-    }
-  },
   computed: {
-    _lastPieces: function() {
+    lastPieces: function() {
       return this.availableItems(this.products[this.$route.params.id]) === 2
     },
-    _lastPiece: function() {
+    
+    lastPiece: function() {
       return this.availableItems(this.products[this.$route.params.id]) === 1
     },
-    _empty: function() {
+    
+    empty: function() {
       return this.availableItems(this.products[this.$route.params.id]) === 0
     },
-    _countAvailableItems: function() {
+    
+    countAvailableItems: function() {
       return this.availableItems(this.products[this.$route.params.id]);
-    }
-  },
-  methods: {
-    _imageParser: function(product) {
-      return product.image.src
     },
-    routeHome: function() {
-      this.$router.push({
-        name: 'products'
-      });
+    
+    product: function() {
+      return {...this.products[this.$route.params.id]}
     }
   }
 }

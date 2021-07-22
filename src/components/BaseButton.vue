@@ -25,10 +25,12 @@ export default {
       type: Function,
       default: () => false
     },
+
     clickFunction: {
       type: Function,
       default: () => false
     },
+
     submitFunction: {
       type: Function,
       default: () => false

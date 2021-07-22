@@ -20,7 +20,7 @@
     </main>
 
     <main v-else-if="getRoute === 'products-details'">
-      <Product
+      <ProductDetails
           v-bind:products="products"
           v-bind:addToCart="addtoCart"
           v-bind:canAddToCart="canAddToCart"
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Product from '@/components/ProductDetails.vue'
+import ProductDetails from '@/components/ProductDetails.vue'
 import BaseHeader from '@/components/BaseHeader.vue'
 import Cart from '@/components/Cart.vue'
 import Form from "@/components/Form"
@@ -67,7 +67,7 @@ export default {
     BaseHeader,
     BaseFooter,
     ProductList,
-    Product,
+    ProductDetails,
     Cart,
     Form,
     Index,

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <b-container v-if="!disableSort">
+    <b-container>
       <b-row>
         <b-col>
           <b-form-select
+              v-if="!disableSort"
               class="sort-select border-radius shadow color-dark custom-select"
               v-model="currentSortType"
               v-bind:options="sortOptions"
@@ -39,31 +40,38 @@ import Product from "@/components/Product";
 
 export default {
   name: "BasePaginator",
+
   props: {
     component: {
       type: String,
       required: true
     },
+
     sourceItems: {
       type: Array,
       required: true
     },
+
     fallback: {
       type: Function,
       default: () => false
     },
+
     disableSort: {
       type: Boolean,
       default: () => false
     },
+
     sortDefault: {
       type: String,
       default: () => 'id-asc'
     },
+
     sort: {
       type: Array,
       default: () => []
     },
+
     defaultPerPage: {
       type: Number,
       default: () => 5
@@ -73,6 +81,7 @@ export default {
     route: function(product) {
       this.fallback(product)
     },
+
     loadPage: function(page) {
       window.scrollTo({
         top: 0,
@@ -95,13 +104,19 @@ export default {
     getCurrentPage: function() {
       return this.currentPage
     },
+
     getCurrentRange: function() {
       return (this.perPage * this.currentPage + this.perPage) > this.sourceItems.length ? this.sourceItems.length : (this.perPage * this.currentPage + this.perPage)
     },
-    getPageNumbers: function() {
-      let additionalPage = this.sourceItems.length % this.perPage > 0 ? 1 : 0
-      return parseInt(this.sourceItems.length / this.perPage) + additionalPage
+
+    addPage: function() {
+      return this.sourceItems.length % this.perPage > 0 ? 1 : 0
     },
+
+    getPageNumbers: function() {
+      return parseInt(this.sourceItems.length / this.perPage) + this.addPage
+    },
+
     sortOptions: function() {
       let _sortOptions = []
       this.sort.map((a) => {
@@ -116,6 +131,7 @@ export default {
       })
       return _sortOptions
     },
+
     perPageOptions: () => {
       return [
         {
@@ -132,6 +148,7 @@ export default {
         },
       ]
     },
+
     filteredSourceItems: function() {
       let compare;
       this.sort.forEach(el => {
