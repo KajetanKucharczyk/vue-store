@@ -59,8 +59,8 @@
     </b-container>
 
     <BaseButton
-        v-bind:clickFunction="() => addToCart(product.id)"
-        v-bind:updateVisible="() => canAddToCart(product)"
+        v-bind:clickFunction="addProductToCart"
+        v-bind:updateVisible="canAddProductToCart"
     >
 
       <span v-if="lastPieces">
@@ -133,6 +133,15 @@ export default {
     
     product: function() {
       return this.products.find(el => el.id === parseInt(this.$route.params.id))
+    },
+
+    canAddProductToCart: function() {
+      return this.canAddToCart(this.product)
+    }
+  },
+  methods: {
+    addProductToCart: function() {
+      this.addToCart(this.product.id)
     },
   },
   created() {

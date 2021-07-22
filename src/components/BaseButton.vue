@@ -29,18 +29,18 @@ export default {
   name: 'BaseButton',
   props: {
     updateVisible: {
-      type: Function,
-      default: () => false
+      type: Boolean,
+      default: () => true
     },
 
     clickFunction: {
       type: Function,
-      default: () => false
+      default: () => function() {}
     },
 
     submitFunction: {
       type: Function,
-      default: () => false
+      default: () => function() {}
     },
 
     buttonType: {
