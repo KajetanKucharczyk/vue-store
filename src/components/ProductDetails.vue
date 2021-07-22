@@ -21,7 +21,7 @@
         >
           <div class="product__image-container">
             <img
-                class="product__image border-radius shadow"
+                class="product__image border-radius custom-shadow"
                 v-bind:src="product.image.src"
                 v-bind:alt="product.image.alt"
             />

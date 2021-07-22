@@ -2,29 +2,64 @@
   <b-container>
     <b-row>
       <b-col cols="12">
-        <h2 class="header" v-if="anyItem">Twoje zamówienie</h2>
-        <h2 class="header header--no-products" v-else>Koszyk aktualnie jest pusty</h2>
+        <h2
+            class="header"
+            v-if="anyItem"
+        >
+          Twoje zamówienie
+        </h2>
+        <h2
+            class="header header--no-products"
+            v-else
+        >
+          Koszyk aktualnie jest pusty
+        </h2>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-row class="product color-dark" v-for="item in cartItems" v-bind:key="item.id">
-          <b-col class="product__image" cols="2">
-              <img class="border-radius shadow" v-bind:src="item.image.src" v-bind:alt="item.image.alt" />
+        <b-row
+            class="product color-dark"
+            v-for="item in cartItems"
+            v-bind:key="item.id"
+        >
+          <b-col
+              class="product__image"
+              cols="2"
+          >
+              <img class="border-radius custom-shadow" v-bind:src="item.image.src" v-bind:alt="item.image.alt" />
           </b-col>
-          <b-col class="product__name" cols="2">
-            <strong>{{item.name}}</strong>
+          <b-col
+              class="product__name"
+              cols="2"
+          >
+            <strong>
+              {{ item.name }}
+            </strong>
           </b-col>
-          <b-col class="product__count" cols="1">
-            {{totalProductCount(item)}}
+          <b-col
+              class="product__count"
+              cols="1"
+          >
+            {{ totalProductCount(item) }}
           </b-col>
-          <b-col class="product__price" cols="3">
-            {{item.price | formatPrice}}
+          <b-col
+              class="product__price"
+              cols="3"
+          >
+            {{ item.price | formatPrice }}
           </b-col>
-          <b-col class="product__total-price" cols="3">
-            {{totalProductPrice(item) | formatPrice}}
+          <b-col
+              class="product__total-price"
+              cols="3"
+          >
+            {{ totalProductPrice(item) | formatPrice }}
           </b-col>
-          <b-col class="product__remove border-radius color-light shadow" cols="1" v-on:click="removeFromCart(item.id)">
+          <b-col
+              class="product__remove border-radius color-light custom-shadow"
+              cols="1"
+              v-on:click="removeFromCart(item.id)"
+          >
             X
           </b-col>
         </b-row>
@@ -32,7 +67,9 @@
     </b-row>
     <b-row v-if="anyItem">
       <b-col cols="12">
-        <h2 class="header">Podsumowanie</h2>
+        <h2 class="header">
+          Podsumowanie
+        </h2>
       </b-col>
     </b-row>
     <b-row v-if="anyItem">
@@ -48,12 +85,26 @@
         Łączna kwota do zapłaty:
       </b-col>
       <b-col cols="3">
-        {{totalProductsPrice | formatPrice}}
+        {{ totalProductsPrice | formatPrice }}
       </b-col>
     </b-row>
     <b-row>
-      <Button v-if="anyItem" v-bind:clickFunction="() => $router.push({name: 'form'}).catch(() => {})" v-bind:updateVisible="() => {return true}">Finalizuj zamówienie</Button>
-      <Button v-else v-bind:clickFunction="() => $router.push({name: 'home'}).catch(() => {})" v-bind:updateVisible="() => {return true}">Powrót</Button>
+
+      <Button
+          v-if="anyItem" v-bind:clickFunction="() => $router.push({name: 'form'}).catch(() => {})"
+          v-bind:updateVisible="() => {return true}"
+      >
+        Finalizuj zamówienie
+      </Button>
+
+      <Button
+          v-else
+          v-bind:clickFunction="() => $router.back()"
+          v-bind:updateVisible="() => {return true}"
+      >
+        Powrót
+      </Button>
+
     </b-row>
 
   </b-container>
@@ -70,10 +121,12 @@ export default {
       type: Array,
       default: () => []
     },
+
     products: {
       type: Array,
       required: true
     },
+
     removeFromCart: {
       type: Function,
       default: () => false

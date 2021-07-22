@@ -1,6 +1,6 @@
 <template>
   <router-link
-      class="product border-radius shadow color-dark"
+      class="product border-radius custom-shadow color-dark"
       v-bind:to="{
         name: 'product',
         params: {
@@ -16,7 +16,7 @@
             md="4"
         >
           <img
-              class="product__image border-radius shadow"
+              class="product__image border-radius custom-shadow"
               v-bind:src="data.image.src"
               v-bind:alt="data.image.alt"
           />
@@ -83,12 +83,13 @@ export default {
   position: relative;
   margin: 20px;
   border: 1px solid $dark-color;
-  transition: 0.2s background-color ease-in-out;
+  transition: 0.2s transform ease-in-out, 0.2s box-shadow ease-in-out;
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    background-color: $light-color;
+    transform: translate(-2px, -2px);
+    box-shadow: $hover-shadow;
   }
 
   &__header {

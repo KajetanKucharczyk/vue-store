@@ -5,7 +5,7 @@
     </b-row>
     <b-row>
       <router-link v-bind:to="{name: 'products'}">
-        <Button>Zobacz wszystkie produkty</Button>
+        <BaseButton>Zobacz wszystkie produkty</BaseButton>
       </router-link>
     </b-row>
   </b-container>
@@ -13,12 +13,12 @@
 
 <script>
 
-import Button from "@/components/BaseButton"
+import BaseButton from "@/components/BaseButton"
 
 export default {
   name: "Index",
   components: {
-    Button
+    BaseButton
   }
 }
 </script>

@@ -2,8 +2,12 @@ $base-color: darkcyan;
 $white-color: white;
 $light-color: #ebebeb;
 $dark-color: #444444;
+$danger-color: #eb4034;
+$warning-color: #f2964b;
+$success-color: #32a852;
 
-$shadow: 5px 5px 10px 5px $dark-color;
+$shadow: 4px 4px 10px 1px gray;
+$hover-shadow: 7px 7px 12px 2px gray;
 
 html, body {
 }
@@ -23,6 +27,6 @@ html, body {
 .border-radius {
   border-radius: 5px;
 }
-.shadow {
+.custom-shadow {
   box-shadow: $shadow;
 }

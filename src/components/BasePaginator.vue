@@ -5,12 +5,12 @@
         <b-col>
           <b-form-select
               v-if="!disableSort"
-              class="sort-select border-radius shadow color-dark custom-select"
+              class="sort-select border-radius custom-shadow color-dark custom-select"
               v-model="currentSortType"
               v-bind:options="sortOptions"
           />
           <b-form-select
-              class="per-page-select border-radius shadow color-dark custom-select"
+              class="per-page-select border-radius custom-shadow color-dark custom-select"
               v-model="perPage"
               v-bind:options="perPageOptions"
           />
@@ -18,16 +18,38 @@
       </b-row>
     </b-container>
     <b-container>
-      <b-row v-for="data in filteredSourceItems" v-bind:key="data.id" v-on:click="route(data)">
-        <component v-bind:is="component" v-bind="{data}" />
+      <b-row
+          v-for="data in filteredSourceItems"
+          v-bind:key="data.id"
+          v-on:click="route(data)"
+      >
+        <component
+            v-bind:is="component"
+            v-bind="{data}"
+        />
       </b-row>
       <b-row>
         <ul class="paginator">
-          <li class="border-radius shadow color-dark first" v-on:click="loadPage(1)">Pierwszy</li>
-          <li class="border-radius shadow color-dark" v-for="page in getPageNumbers" v-bind:key="page" v-on:click="loadPage(page)">
+          <li
+              class="border-radius custom-shadow color-dark first"
+              v-on:click="loadPage(1)"
+          >
+            Pierwszy
+          </li>
+          <li
+              class="border-radius custom-shadow color-dark"
+              v-for="page in getPageNumbers"
+              v-bind:key="page"
+              v-on:click="loadPage(page)"
+          >
             {{ page }}
           </li>
-          <li class="border-radius shadow color-dark last" v-on:click="loadPage(getPageNumbers)">Ostatni</li>
+          <li
+              class="border-radius custom-shadow color-dark last"
+              v-on:click="loadPage(getPageNumbers)"
+          >
+            Ostatni
+          </li>
         </ul>
       </b-row>
     </b-container>
