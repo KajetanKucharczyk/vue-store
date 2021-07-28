@@ -9,18 +9,17 @@
       </BaseHeader>
     </main>
 
-    <main v-if="getRoute === 'home'">
+    <main v-if="getRoute('home')">
       <Index />
     </main>
 
     <main v-else-if="getRoute === 'products'">
       <ProductList
           v-bind:products="products"
-          v-bind:setCurrentProduct="setCurrentProduct"
       />
     </main>
 
-    <main v-else-if="getRoute === 'product'">
+    <main v-else-if="getRoute('product')">
       <ProductDetails
           v-bind:products="products"
           v-bind:canAddToCart="canAddToCart"
@@ -28,14 +27,14 @@
       />
     </main>
 
-    <main v-else-if="getRoute === 'cart'">
+    <main v-else-if="getRoute('cart')">
       <Cart
           v-bind:products="products"
           v-bind:cart="cart"
       />
     </main>
 
-    <main v-else-if="getRoute === 'form'">
+    <main v-else-if="getRoute('form')">
       <Form />
     </main>
 
@@ -103,10 +102,21 @@ export default {
     availableItems: function(product) {
       return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
     },
-  },
-  computed: {
-    getRoute: function() {
-      return this.$route.name
+
+    getProducts: function() {
+      if(window.localStorage.getItem('products'))
+        this.products = JSON.parse(window.localStorage.getItem('products'))
+      else
+        fetch("./products.json")
+            .then(response => response.json())
+            .then(data => {
+              localStorage.setItem('products', JSON.stringify(data.products))
+              this.products = data.products
+            })
+    },
+
+    getRoute: function(routeName) {
+      return this.$route.name === routeName
     }
   },
   created() {
@@ -117,16 +127,8 @@ export default {
     methodEmitter.$on('removeFromCart', productId => {
       this.removeFromCart(productId)
     });
-    // pobranie zawartości z pliku JSON lub z obiektu localStorage
-    if(window.localStorage.getItem('products'))
-      this.products = JSON.parse(window.localStorage.getItem('products'))
-    else
-      fetch("./products.json")
-          .then(response => response.json())
-          .then(data => {
-            localStorage.setItem('products', JSON.stringify(data.products))
-            this.products = data.products
-          })
+    // pobranie produktów
+    this.getProducts()
   }
 }
 </script>

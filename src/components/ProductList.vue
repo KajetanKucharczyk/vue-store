@@ -17,10 +17,6 @@ export default {
       type: Array,
       required: true
     },
-    setCurrentProduct: {
-      type: Function,
-      required: true
-    }
   },
   data() {
     return {
