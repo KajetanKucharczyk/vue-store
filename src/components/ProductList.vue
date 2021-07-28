@@ -3,7 +3,6 @@
     <BasePaginator
         v-bind="{component, sortDefault, sort}"
         v-bind:sourceItems="products"
-        v-bind:fallback="_setCurrentProduct"
     />
   </b-container>
 </template>
@@ -49,11 +48,7 @@ export default {
   components: {
     BasePaginator,
   },
-  methods: {
-    _setCurrentProduct: function(product) {
-      this.setCurrentProduct(product)
-    }
-  }
+  methods: {}
 }
 </script>
 

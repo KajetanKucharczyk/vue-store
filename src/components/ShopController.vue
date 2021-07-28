@@ -2,10 +2,11 @@
   <div id="app">
 
     <main>
-      <BaseHeader
-          v-bind:siteName="siteName"
-          v-bind:cart="cart"
-      />
+      <BaseHeader v-bind:cart="cart">
+        <template v-slot:siteName>
+          {{siteName}}
+        </template>
+      </BaseHeader>
     </main>
 
     <main v-if="getRoute === 'home'">
@@ -22,7 +23,6 @@
     <main v-else-if="getRoute === 'product'">
       <ProductDetails
           v-bind:products="products"
-          v-bind:addToCart="addtoCart"
           v-bind:canAddToCart="canAddToCart"
           v-bind:availableItems="availableItems"
       />
@@ -30,7 +30,6 @@
 
     <main v-else-if="getRoute === 'cart'">
       <Cart
-          v-bind:removeFromCart="removeFromCart"
           v-bind:products="products"
           v-bind:cart="cart"
       />
@@ -61,6 +60,8 @@ import BaseFooter from "@/components/BaseFooter"
 import Index from "@/components/Index"
 import Error from "@/components/Error"
 
+import methodEmitter from '@/methodEmitter/methodEmitter';
+
 export default {
   name: 'ShopController',
   components: {
@@ -76,7 +77,6 @@ export default {
   data () {
     return {
       products: [],
-      currentProduct: null,
       siteName: "SKLEPik",
       cart: [],
     }
@@ -91,17 +91,17 @@ export default {
     addtoCart: function(productId) {
       this.cart.push(productId)
     },
+
+    removeFromCart: function (productId) {
+      this.cart = this.cart.filter(el => el !== productId)
+    },
+
     canAddToCart: function(product) {
       return this.cart.filter(cartElement => cartElement === product.id).length < product.availableQuantity
     },
+
     availableItems: function(product) {
       return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
-    },
-    setCurrentProduct: function(product) {
-      this.currentProduct = product.id
-    },
-    removeFromCart: function (productId) {
-      this.cart = this.cart.filter(el => el !== productId)
     },
   },
   computed: {
@@ -110,6 +110,13 @@ export default {
     }
   },
   created() {
+    // obsługa zdarzeń pomiędzy komponentami
+    methodEmitter.$on('addtoCart', productId => {
+      this.addtoCart(productId)
+    });
+    methodEmitter.$on('removeFromCart', productId => {
+      this.removeFromCart(productId)
+    });
     // pobranie zawartości z pliku JSON lub z obiektu localStorage
     if(window.localStorage.getItem('products'))
       this.products = JSON.parse(window.localStorage.getItem('products'))
@@ -119,7 +126,7 @@ export default {
           .then(data => {
             localStorage.setItem('products', JSON.stringify(data.products))
             this.products = data.products
-          });
+          })
   }
 }
 </script>

@@ -10,7 +10,7 @@ export default {
     $route: {
       immediate: true,
       handler(to) {
-        document.title = to.meta && to.meta.title || 'Some Default Title';
+        document.title = to.meta && to.meta.title || 'Some Default Title'
       }
     },
   }

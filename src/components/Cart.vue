@@ -114,6 +114,7 @@
 import Button from "@/components/BaseButton";
 
 import router from "@/mixins/router";
+import methodEmitter from "@/methodEmitter/methodEmitter";
 
 export default {
   name: "Cart",
@@ -128,11 +129,6 @@ export default {
       type: Array,
       required: true
     },
-
-    removeFromCart: {
-      type: Function,
-      default: () => false
-    }
   },
   components: {
     Button
@@ -154,6 +150,10 @@ export default {
 
     totalProductPrice: function(item) {
       return this.totalProductCount(item) * item.price
+    },
+
+    removeFromCart: function(productId) {
+      methodEmitter.$emit('removeFromCart', productId);
     }
   },
   computed: {

@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(BootstrapVue)
 Vue.use(Router)
 
-import routes from "@/routes/routes";
+import routes from "@/routes/routes"
 
 const router = new Router({
   mode: 'history',

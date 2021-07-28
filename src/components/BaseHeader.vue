@@ -4,7 +4,7 @@
         class="name color-light"
         v-on:click="route('home')"
     >
-      {{siteName}}
+      <slot name="siteName"></slot>
     </div>
 
     <HeaderCart v-bind:cartQuantity="cartQuantity" />

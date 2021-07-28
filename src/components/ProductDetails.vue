@@ -59,7 +59,7 @@
     </b-container>
 
     <BaseButton
-        v-bind:clickFunction="addProductToCart"
+        v-bind:clickFunction="addtoCart"
         v-bind:updateVisible="canAddProductToCart"
     >
 
@@ -90,6 +90,8 @@ import BaseButton from "@/components/BaseButton";
 
 import router from "@/mixins/router";
 
+import methodEmitter from "@/methodEmitter/methodEmitter"
+
 export default {
   name: 'ProductDetails',
   mixins: [router],
@@ -99,11 +101,6 @@ export default {
   props: {
     products: {
       type: Array,
-      required: true
-    },
-    
-    addToCart: {
-      type: Function,
       required: true
     },
     
@@ -143,9 +140,9 @@ export default {
     }
   },
   methods: {
-    addProductToCart: function() {
-      this.addToCart(this.product.id)
-    },
+    addtoCart() {
+      methodEmitter.$emit('addtoCart', this.product.id);
+    }
   },
   created() {
     document.title = this.product.name

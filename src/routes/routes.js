@@ -1,4 +1,4 @@
-import ShopController from "@/components/ShopController";
+import ShopController from "@/components/ShopController"
 
 const routes = [
     {
