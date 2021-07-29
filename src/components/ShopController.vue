@@ -13,7 +13,7 @@
       <Index />
     </main>
 
-    <main v-else-if="getRoute === 'products'">
+    <main v-else-if="getRoute('products')">
       <ProductList
           v-bind:products="products"
       />
