@@ -9,37 +9,8 @@
       </BaseHeader>
     </main>
 
-    <main v-if="getRoute('home')">
-      <Index />
-    </main>
-
-    <main v-else-if="getRoute('products')">
-      <ProductList
-          v-bind:products="products"
-      />
-    </main>
-
-    <main v-else-if="getRoute('product')">
-      <ProductDetails
-          v-bind:products="products"
-          v-bind:canAddToCart="canAddToCart"
-          v-bind:availableItems="availableItems"
-      />
-    </main>
-
-    <main v-else-if="getRoute('cart')">
-      <Cart
-          v-bind:products="products"
-          v-bind:cart="cart"
-      />
-    </main>
-
-    <main v-else-if="getRoute('form')">
-      <Form />
-    </main>
-
-    <main v-else>
-      <Error />
+    <main>
+        <component v-bind:is="routeComponent.component" v-bind="routeComponent.params"></component>
     </main>
 
     <footer>
@@ -50,28 +21,24 @@
 </template>
 
 <script>
-import ProductDetails from '@/components/ProductDetails.vue'
+
 import BaseHeader from '@/components/BaseHeader.vue'
-import Cart from '@/components/Cart.vue'
-import Form from "@/components/Form"
-import ProductList from "@/components/ProductList";
 import BaseFooter from "@/components/BaseFooter"
-import Index from "@/components/Index"
-import Error from "@/components/Error"
 
 import methodEmitter from '@/methodEmitter/methodEmitter';
+
+const ProductDetails  = () => import("@/components/ProductDetails")
+const Cart            = () => import("@/components/Cart")
+const Form            = () => import("@/components/Form")
+const ProductList     = () => import("@/components/ProductList")
+const Index           = () => import("@/components/Index")
+const Error           = () => import("@/components/Error")
 
 export default {
   name: 'ShopController',
   components: {
     BaseHeader,
     BaseFooter,
-    ProductList,
-    ProductDetails,
-    Cart,
-    Form,
-    Index,
-    Error
   },
   data () {
     return {
@@ -84,6 +51,60 @@ export default {
     route: {
       type: String,
       default: () => "index"
+    }
+  },
+  computed: {
+    routeComponent: function() {
+      let componentData;
+      switch(this.$route.name) {
+        case 'home':
+          componentData = {
+            component: Index,
+            params: {}
+          }
+          break
+        case 'products':
+          componentData = {
+            component: ProductList,
+            params: {
+              products: this.products
+            }
+          }
+          break;
+        case 'product':
+          componentData = {
+            component: ProductDetails,
+            params: {
+              products: this.products,
+              canAddToCart: this.canAddToCart,
+              availableItems: this.availableItems
+            }
+          }
+          break;
+        case 'cart':
+          componentData = {
+            component: Cart,
+            params: {
+              products: this.products,
+              cart: this.cart
+            }
+          }
+          break;
+        case 'form':
+          componentData = {
+            component: Form,
+            params: {}
+          }
+          break;
+        default:
+          componentData = {
+            component: Error,
+            params: {}
+          }
+          break;
+      }
+
+      return componentData
     }
   },
   methods: {
@@ -113,10 +134,6 @@ export default {
               localStorage.setItem('products', JSON.stringify(data.products))
               this.products = data.products
             })
-    },
-
-    getRoute: function(routeName) {
-      return this.$route.name === routeName
     }
   },
   created() {
