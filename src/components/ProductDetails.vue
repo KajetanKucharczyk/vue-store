@@ -27,7 +27,7 @@
             />
             <BaseButton
                 class="product__back-button"
-                v-bind:clickFunction="() => route('products')"
+                v-bind:clickFunction="() => routeProducts.route()"
             >
               Powrót
             </BaseButton>
@@ -88,15 +88,24 @@
 
 import BaseButton from "@/components/BaseButton";
 
-import router from "@/mixins/router";
-import products from "@/mixins/products";
 import cart from "@/mixins/cart";
+
+import userProducts from "@/compositions/useProducts";
+import useRoute from "@/compositions/useRoute";
 
 export default {
   name: 'ProductDetails',
-  mixins: [router, products, cart],
+  mixins: [cart],
   components: {
     BaseButton
+  },
+  setup(props, context) {
+    const {product} = userProducts(props, context)
+    const routeProducts = useRoute('products', props, context)
+    return {
+      product,
+      routeProducts
+    }
   },
   computed: {
     lastPieces: function() {

@@ -10,7 +10,7 @@
     </main>
 
     <main>
-        <component v-bind:is="routeComponent.component" v-bind="routeComponent.params"></component>
+        <component v-bind:is="routeComponent"></component>
     </main>
 
     <footer>
@@ -53,47 +53,29 @@ export default {
   },
   computed: {
     routeComponent: function() {
-      let componentData;
+      let component;
       switch(this.$route.name) {
         case 'home':
-          componentData = {
-            component: Index,
-            params: {}
-          }
+          component = Index
           break
         case 'products':
-          componentData = {
-            component: ProductList,
-            params: {}
-          }
+          component = ProductList
           break;
         case 'product':
-          componentData = {
-            component: ProductDetails,
-            params: {}
-          }
+          component = ProductDetails
           break;
         case 'cart':
-          componentData = {
-            component: Cart,
-            params: {}
-          }
+          component = Cart
           break;
         case 'form':
-          componentData = {
-            component: Form,
-            params: {}
-          }
+          component = Form
           break;
         default:
-          componentData = {
-            component: Error,
-            params: {}
-          }
+          component = Error
           break;
       }
 
-      return componentData
+      return component
     }
   }
 }

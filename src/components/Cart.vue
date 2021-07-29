@@ -92,14 +92,14 @@
 
       <Button
           v-if="anyItem"
-          v-bind:clickFunction="() => route('form')"
+          v-bind:clickFunction="() => routeForm.route()"
       >
         Finalizuj zamówienie
       </Button>
 
       <Button
           v-else
-          v-bind:clickFunction="() => routeBack"
+          v-bind:clickFunction="() => routeForm.routeBack()"
       >
         Powrót
       </Button>
@@ -113,15 +113,24 @@
 
 import Button from "@/components/BaseButton";
 
-import products from "@/mixins/products";
-import router from "@/mixins/router";
 import cart from '@/mixins/cart'
+import userProducts from "@/compositions/useProducts";
+import useRoute from "@/compositions/useRoute";
 
 export default {
   name: "Cart",
-  mixins: [router, products, cart],
+  mixins: [ cart],
   components: {
     Button
+  },
+  setup(props, context) {
+    const {products} = userProducts(props, context)
+    const routeForm = useRoute('form', props, context)
+
+    return {
+      products,
+      routeForm
+    }
   },
   methods: {
     getItems: function(items) {

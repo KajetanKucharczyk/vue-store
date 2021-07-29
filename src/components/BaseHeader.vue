@@ -2,7 +2,7 @@
   <div class="header background-base">
     <div
         class="name color-light"
-        v-on:click="route('home')"
+        v-on:click="routeHome.route('home')"
     >
       <slot name="siteName"></slot>
     </div>
@@ -16,13 +16,18 @@
 
 import HeaderCart from "@/components/HeaderCart";
 
-import router from "@/mixins/router";
+import useRoute from "@/compositions/useRoute";
 
 export default {
   name: "BaseHeader",
-  mixins: [router],
   components: {
     HeaderCart
+  },
+  setup(props, context) {
+    const routeHome = useRoute('home', props, context)
+    return {
+      routeHome
+    }
   },
   props: {
     siteName: {

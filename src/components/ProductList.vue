@@ -10,11 +10,17 @@
 <script>
 import BasePaginator from "@/components/BasePaginator";
 
-import products from "@/mixins/products";
+import userProducts from "@/compositions/useProducts"
 
 export default {
   name: "ProductList",
-  mixins: [products],
+  setup(props, context) {
+    const {products} = userProducts(props, context)
+
+    return {
+      products
+    }
+  },
   data() {
     return {
       component: "Product",
