@@ -110,6 +110,18 @@ export default {
   methods: {
     addtoCart: function(productId) {
       this.cart.push(productId)
+      this.setCart()
+    },
+
+    getCart: function() {
+      if(window.localStorage.getItem('cart'))
+        this.cart = JSON.parse(window.localStorage.getItem('cart'))
+      else
+        this.cart = []
+    },
+
+    setCart: function() {
+      localStorage.setItem('cart', JSON.stringify(this.cart))
     },
 
     removeFromCart: function (productId) {
@@ -146,6 +158,8 @@ export default {
     });
     // pobranie produktów
     this.getProducts()
+    // pobranie koszyka
+    this.getCart()
   }
 }
 </script>
