@@ -16,7 +16,10 @@ const router = new Router({
 
 import "@/filters/priceFormatFilter"
 
+import store from "@/store/store"
+
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

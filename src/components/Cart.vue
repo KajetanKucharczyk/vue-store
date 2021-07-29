@@ -135,7 +135,7 @@ export default {
     },
 
     totalProductCount: function(item) {
-      return this.cart.filter(el => el === item.id).length
+      return this.$store.getters.getCart.filter(el => el === item.id).length
     },
 
     totalProductPrice: function(item) {
@@ -144,15 +144,15 @@ export default {
   },
   computed: {
     cartItems: function() {
-      return this.getItems(this.cart)
+      return this.getItems(this.$store.getters.getCart)
     },
 
     anyItem: function() {
-      return this.cart.length
+      return this.$store.getters.getCart.length
     },
 
     totalProductsPrice: function() {
-      return this.cart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
+      return this.$store.getters.getCart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
     }
   },
 }
