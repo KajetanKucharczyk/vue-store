@@ -2,7 +2,7 @@
   <div>
     <div
         class="cart"
-        v-if="!cartQuantity"
+        v-if="!cartLength"
         v-on:click="route('cart', true)"
     >
       Koszyk pusty
@@ -12,7 +12,7 @@
         v-else
         v-on:click="route('cart', true)"
     >
-      W koszyku: {{cartQuantity}}
+      W koszyku: {{cartLength}}
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ import cart from "@/mixins/cart";
 
 export default {
   name: "HeaderCart",
-  mixins:[router, cart]
+  mixins:[cart, router]
 }
 </script>
 

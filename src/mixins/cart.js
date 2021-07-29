@@ -1,9 +1,7 @@
+import {mapState} from "vuex";
+
 export default {
     methods: {
-        getCart: function() {
-            return this.$store.getters.getCart
-        },
-
         addtoCart: function(productId) {
             this.$store.commit('ADD_TO_CART', productId)
         },
@@ -13,16 +11,17 @@ export default {
         },
 
         canAddToCart: function(product) {
-            return this.$store.getters.getCart.filter(cartElement => cartElement === product.id).length < product.availableQuantity
+            return this.cart.filter(cartElement => cartElement === product.id).length < product.availableQuantity
         },
 
         availableItems: function(product) {
-            return product.availableQuantity - this.$store.getters.getCart.filter(cartElement => cartElement === product.id).length
+            return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
         }
     },
     computed: {
-        cartQuantity: function() {
-            return this.$store.getters.getCart.length
-        }
+        ...mapState({
+            cart: (state) => state.cart.cart,
+            cartLength: (state) => state.cart.cart.length,
+        })
     }
 }

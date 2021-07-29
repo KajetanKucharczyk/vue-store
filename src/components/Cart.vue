@@ -4,7 +4,7 @@
       <b-col cols="12">
         <h2
             class="header"
-            v-if="anyItem"
+            v-if="cartLength"
         >
           Twoje zamówienie
         </h2>
@@ -65,22 +65,22 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-row v-if="anyItem">
+    <b-row v-if="cartLength">
       <b-col cols="12">
         <h2 class="header">
           Podsumowanie
         </h2>
       </b-col>
     </b-row>
-    <b-row v-if="anyItem">
+    <b-row v-if="cartLength">
       <b-col cols="3">
         Łączna ilość predniotów:
       </b-col>
       <b-col cols="3">
-        {{anyItem}}
+        {{cartLength}}
       </b-col>
     </b-row>
-    <b-row v-if="anyItem">
+    <b-row v-if="cartLength">
       <b-col cols="3">
         Łączna kwota do zapłaty:
       </b-col>
@@ -91,7 +91,7 @@
     <b-row>
 
       <Button
-          v-if="anyItem"
+          v-if="cartLength"
           v-bind:clickFunction="() => route('form')"
       >
         Finalizuj zamówienie
@@ -114,12 +114,12 @@
 import Button from "@/components/BaseButton";
 
 import products from "@/mixins/products";
+import cart from "@/mixins/cart";
 import router from "@/mixins/router";
-import cart from '@/mixins/cart'
 
 export default {
   name: "Cart",
-  mixins: [router, products, cart],
+  mixins: [cart, router, products],
   components: {
     Button
   },
@@ -135,7 +135,7 @@ export default {
     },
 
     totalProductCount: function(item) {
-      return this.$store.getters.getCart.filter(el => el === item.id).length
+      return this.cart.filter(el => el === item.id).length
     },
 
     totalProductPrice: function(item) {
@@ -144,17 +144,13 @@ export default {
   },
   computed: {
     cartItems: function() {
-      return this.getItems(this.$store.getters.getCart)
-    },
-
-    anyItem: function() {
-      return this.$store.getters.getCart.length
+      return this.getItems(this.cart)
     },
 
     totalProductsPrice: function() {
-      return this.$store.getters.getCart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
-    }
-  },
+      return this.cart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
+    },
+  }
 }
 </script>
 

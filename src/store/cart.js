@@ -5,9 +5,7 @@ export default {
     state: {
         cart: []
     },
-    getters: {
-        getCart: state => state.cart,
-    },
+    getters: {},
     mutations: {
         [ADD_TO_CART]:        (state, productId) => state.cart.push(productId),
         [REMOVE_FROM_CART]:   (state, productId) => state.cart = state.cart.filter(el => el !== productId)

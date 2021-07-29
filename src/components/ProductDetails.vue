@@ -98,6 +98,11 @@ export default {
   components: {
     BaseButton
   },
+  methods: {
+    availableItems: function(product) {
+      return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
+    }
+  },
   computed: {
     lastPieces: function() {
       return this.availableItems(this.product) === 2
@@ -117,7 +122,8 @@ export default {
 
     canAddProductToCart: function() {
       return this.canAddToCart(this.product)
-    }
+    },
+
   },
   created() {
     document.title = this.product.name
