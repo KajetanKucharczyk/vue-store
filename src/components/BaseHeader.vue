@@ -7,7 +7,7 @@
       <slot name="siteName"></slot>
     </div>
 
-    <HeaderCart v-bind:cartQuantity="cartQuantity" />
+    <HeaderCart />
 
   </div>
 </template>
@@ -28,17 +28,7 @@ export default {
     siteName: {
       type: String
     },
-
-    cart: {
-      type: Array,
-      default: () => []
-    }
   },
-  computed: {
-    cartQuantity: function() {
-      return this.cart.length
-    }
-  }
 }
 </script>
 

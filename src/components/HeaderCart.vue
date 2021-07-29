@@ -20,16 +20,11 @@
 <script>
 
 import router from "@/mixins/router";
+import cart from "@/mixins/cart";
 
 export default {
   name: "HeaderCart",
-  mixins:[router],
-  props: {
-    cartQuantity: {
-      type: Number,
-      default: 0
-    }
-  }
+  mixins:[router, cart]
 }
 </script>
 

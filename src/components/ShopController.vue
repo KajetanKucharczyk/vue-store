@@ -2,7 +2,7 @@
   <div id="app">
 
     <main>
-      <BaseHeader v-bind:cart="cart">
+      <BaseHeader>
         <template v-slot:siteName>
           {{siteName}}
         </template>
@@ -25,8 +25,6 @@
 import BaseHeader from '@/components/BaseHeader.vue'
 import BaseFooter from "@/components/BaseFooter"
 
-import methodEmitter from '@/methodEmitter/methodEmitter';
-
 const ProductDetails  = () => import("@/components/ProductDetails")
 const Cart            = () => import("@/components/Cart")
 const Form            = () => import("@/components/Form")
@@ -42,9 +40,9 @@ export default {
   },
   data () {
     return {
-      products: [],
       siteName: "SKLEPik",
       cart: [],
+      products: {}
     }
   },
   props: {
@@ -66,28 +64,19 @@ export default {
         case 'products':
           componentData = {
             component: ProductList,
-            params: {
-              products: this.products
-            }
+            params: {}
           }
           break;
         case 'product':
           componentData = {
             component: ProductDetails,
-            params: {
-              products: this.products,
-              canAddToCart: this.canAddToCart,
-              availableItems: this.availableItems
-            }
+            params: {}
           }
           break;
         case 'cart':
           componentData = {
             component: Cart,
-            params: {
-              products: this.products,
-              cart: this.cart
-            }
+            params: {}
           }
           break;
         case 'form':
@@ -106,60 +95,6 @@ export default {
 
       return componentData
     }
-  },
-  methods: {
-    addtoCart: function(productId) {
-      this.cart.push(productId)
-      this.setCart()
-    },
-
-    getCart: function() {
-      if(window.localStorage.getItem('cart'))
-        this.cart = JSON.parse(window.localStorage.getItem('cart'))
-      else
-        this.cart = []
-    },
-
-    setCart: function() {
-      localStorage.setItem('cart', JSON.stringify(this.cart))
-    },
-
-    removeFromCart: function (productId) {
-      this.cart = this.cart.filter(el => el !== productId)
-    },
-
-    canAddToCart: function(product) {
-      return this.cart.filter(cartElement => cartElement === product.id).length < product.availableQuantity
-    },
-
-    availableItems: function(product) {
-      return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
-    },
-
-    getProducts: function() {
-      if(window.localStorage.getItem('products'))
-        this.products = JSON.parse(window.localStorage.getItem('products'))
-      else
-        fetch("./products.json")
-            .then(response => response.json())
-            .then(data => {
-              localStorage.setItem('products', JSON.stringify(data.products))
-              this.products = data.products
-            })
-    }
-  },
-  created() {
-    // obsługa zdarzeń pomiędzy komponentami
-    methodEmitter.$on('addtoCart', productId => {
-      this.addtoCart(productId)
-    });
-    methodEmitter.$on('removeFromCart', productId => {
-      this.removeFromCart(productId)
-    });
-    // pobranie produktów
-    this.getProducts()
-    // pobranie koszyka
-    this.getCart()
   }
 }
 </script>
