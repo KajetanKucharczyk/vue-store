@@ -110,60 +110,63 @@
 </template>
 
 <script>
+import {computed} from "@vue/composition-api";
 
 import Button from "@/components/BaseButton";
 
-import cart from '@/mixins/cart'
 import userProducts from "@/compositions/useProducts";
 import useRoute from "@/compositions/useRoute";
+import useCart from "@/compositions/useCart";
 
 export default {
   name: "Cart",
-  mixins: [ cart],
   components: {
     Button
   },
   setup(props, context) {
     const {products} = userProducts(props, context)
     const routeForm = useRoute('form', props, context)
+    const {removeFromCart, getCart} = useCart()
+
+    console.log(products)
+
+    let cart = getCart()
+
+    const cartItems = computed(() => getItems(cart))
+    const anyItem = computed(() => cart.length)
+    const totalProductsPrice = computed(cart.reduce((a, b) => {return typeof getItem(a) === "undefined" ? (a + getItem(b).price) : (getItem(a).price + getItem(b).price)}))
+
+    function getItems(items) {
+      return products.filter(item => {
+        return items.includes(item.id);
+      })
+    }
+
+    function getItem(item) {
+      return products.find(el => el.id === item)
+    }
+
+    function totalProductCount(item) {
+      return getCart.filter(el => el === item.id).length
+    }
+
+    function totalProductPrice(item) {
+      return totalProductCount(item) * item.price
+    }
 
     return {
       products,
-      routeForm
+      routeForm,
+      removeFromCart,
+      getCart,
+      cartItems,
+      anyItem,
+      totalProductsPrice,
+      getItem,
+      totalProductCount,
+      totalProductPrice
     }
-  },
-  methods: {
-    getItems: function(items) {
-      return this.products.filter(item => {
-        return items.includes(item.id);
-      })
-    },
-
-    getItem: function(item) {
-      return this.products.find(el => el.id === item)
-    },
-
-    totalProductCount: function(item) {
-      return this.cart.filter(el => el === item.id).length
-    },
-
-    totalProductPrice: function(item) {
-      return this.totalProductCount(item) * item.price
-    },
-  },
-  computed: {
-    cartItems: function() {
-      return this.getItems(this.cart)
-    },
-
-    anyItem: function() {
-      return this.cart.length
-    },
-
-    totalProductsPrice: function() {
-      return this.cart.reduce((a, b) => {return typeof this.getItem(a) === "undefined" ? (a + this.getItem(b).price) : (this.getItem(a).price + this.getItem(b).price)})
-    }
-  },
+  }
 }
 </script>
 

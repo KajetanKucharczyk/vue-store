@@ -18,16 +18,17 @@
 </template>
 
 <script>
-import cart from "@/mixins/cart";
 import useRoute from "@/compositions/useRoute";
+import useCart from "@/compositions/useCart";
 
 export default {
   name: "HeaderCart",
-  mixins:[cart],
   setup(props, context) {
     const routeCart = useRoute('cart', props, context)
+    const {cartQuantity } = useCart()
     return {
-      routeCart
+      routeCart,
+      cartQuantity
     }
   },
 }

@@ -88,23 +88,25 @@
 
 import BaseButton from "@/components/BaseButton";
 
-import cart from "@/mixins/cart";
-
 import userProducts from "@/compositions/useProducts";
 import useRoute from "@/compositions/useRoute";
+import useCart from "@/compositions/useCart";
 
 export default {
   name: 'ProductDetails',
-  mixins: [cart],
   components: {
     BaseButton
   },
   setup(props, context) {
     const {product} = userProducts(props, context)
     const routeProducts = useRoute('products', props, context)
+    const {addtoCart, canAddToCart, availableItems } = useCart()
     return {
       product,
-      routeProducts
+      routeProducts,
+      addtoCart,
+      canAddToCart,
+      availableItems
     }
   },
   computed: {
