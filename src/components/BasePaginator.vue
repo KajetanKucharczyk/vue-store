@@ -32,6 +32,7 @@
       <b-row v-if="buttonsVisibility.pagination && getPageNumbers > 1">
         <ul class="paginator">
           <li
+              v-if="buttonsVisibility.prev"
               class="border-radius custom-shadow color-dark first"
               v-on:click="loadPage(1)"
           >
@@ -46,6 +47,7 @@
             {{ page }}
           </li>
           <li
+              v-if="buttonsVisibility.next"
               class="border-radius custom-shadow color-dark last"
               v-on:click="loadPage(getPageNumbers)"
           >
@@ -167,20 +169,13 @@ export default {
     },
 
     perPageOptions: () => {
-      return [
-        {
-          value: 5,
-          text: '5'
-        },
-        {
-          value: 10,
-          text: '10'
-        },
-        {
-          value: 100,
-          text: '100'
-        },
-      ]
+      let values = [5, 10, 100]
+      return values.map(el => {
+          return {
+            value: el,
+            text: el.toString()
+          }
+      })
     },
 
     filteredSourceItems: function() {
@@ -214,7 +209,9 @@ export default {
       return {
         sort: !this.disableSort && this.sort.length,
         perPage: !this.disablePerPage,
-        pagination: !this.disablePagination
+        pagination: !this.disablePagination,
+        prev: !(this.getCurrentPage === 0),
+        next: !(this.getCurrentPage === (this.getPageNumbers - 1))
       }
     }
   }
