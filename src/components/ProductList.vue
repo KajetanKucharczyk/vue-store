@@ -2,7 +2,7 @@
   <b-container>
     <BasePaginator
         v-bind="{component, sortDefault, sort}"
-        v-bind:sourceItems="products"
+        v-bind:sourceItems="allProducts"
     />
   </b-container>
 </template>

@@ -11,7 +11,7 @@
             cols="12"
             md="8"
         >
-          <h2>{{ product.name }}</h2>
+          <h2>{{ currentProduct.name }}</h2>
         </b-col>
       </b-row>
       <b-row>
@@ -22,8 +22,8 @@
           <div class="product__image-container">
             <img
                 class="product__image border-radius custom-shadow"
-                v-bind:src="product.image.src"
-                v-bind:alt="product.image.alt"
+                v-bind:src="currentProduct.image.src"
+                v-bind:alt="currentProduct.image.alt"
             />
             <BaseButton
                 class="product__back-button"
@@ -40,17 +40,17 @@
           <b-container>
             <b-row class="product__short-desc">
               <h4>
-                {{ product.shortDesc }}
+                {{ currentProduct.shortDesc }}
               </h4>
             </b-row>
             <b-row class="product__desc">
               <p>
-                {{ product.desc }}
+                {{ currentProduct.desc }}
               </p>
             </b-row>
             <b-row class="product__price">
               <p>
-                {{ product.price | formatPrice }}
+                {{ currentProduct.price | formatPrice }}
               </p>
             </b-row>
           </b-container>
@@ -59,19 +59,19 @@
     </b-container>
 
     <BaseButton
-        v-bind:clickFunction="() => addtoCart(product.id)"
+        v-bind:clickFunction="() => addtoCart(currentProduct.id)"
         v-bind:updateVisible="canAddProductToCart"
     >
 
-      <span v-if="lastPieces">
+      <span v-if="() => countPieces(2)">
         Ostatnie sztuki (zostało {{countAvailableItems}})
       </span>
 
-      <span v-else-if="lastPiece">
+      <span v-else-if="() => countPieces(1)">
         Ostatnia sztuka
       </span>
 
-      <span v-else-if="empty">
+      <span v-else-if="() => countPieces(0)">
         Brak wystarczającej ilośći produktów na stanie
       </span>
 
@@ -99,34 +99,24 @@ export default {
     BaseButton
   },
   methods: {
-    availableItems: function(product) {
-      return product.availableQuantity - this.cart.filter(cartElement => cartElement === product.id).length
-    }
+
   },
   computed: {
-    lastPieces: function() {
-      return this.availableItems(this.product) === 2
-    },
-
-    lastPiece: function() {
-      return this.availableItems(this.product) === 1
-    },
-
-    empty: function() {
-      return this.availableItems(this.product) === 0
+    countPieces: function(howMuch) {
+      return this.availableItems(this.currentProduct) === parseInt(howMuch)
     },
 
     countAvailableItems: function() {
-      return this.availableItems(this.product);
+      return this.availableItems(this.currentProduct);
     },
 
     canAddProductToCart: function() {
-      return this.canAddToCart(this.product)
+      return this.canAddToCart(this.currentProduct)
     },
 
   },
   created() {
-    document.title = this.product.name
+    document.title = this.currentProduct.name
   }
 }
 

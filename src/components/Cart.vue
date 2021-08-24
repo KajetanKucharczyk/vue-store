@@ -99,7 +99,7 @@
 
       <Button
           v-else
-          v-bind:clickFunction="() => routeBack"
+          v-bind:clickFunction="routeBack"
       >
         Powrót
       </Button>
