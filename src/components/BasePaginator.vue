@@ -1,15 +1,16 @@
 <template>
   <div>
-    <b-container>
+    <b-container v-if="buttonsVisibility.sort || buttonsVisibility.perPage">
       <b-row>
         <b-col>
           <b-form-select
-              v-if="!disableSort"
+              v-if="buttonsVisibility.sort"
               class="sort-select border-radius custom-shadow color-dark custom-select"
               v-model="currentSortType"
               v-bind:options="sortOptions"
           />
           <b-form-select
+              v-if="buttonsVisibility.perPage"
               class="per-page-select border-radius custom-shadow color-dark custom-select"
               v-model="perPage"
               v-bind:options="perPageOptions"
@@ -28,7 +29,7 @@
             v-bind="{data}"
         />
       </b-row>
-      <b-row>
+      <b-row v-if="buttonsVisibility.pagination && getPageNumbers > 1">
         <ul class="paginator">
           <li
               class="border-radius custom-shadow color-dark first"
@@ -80,6 +81,16 @@ export default {
     },
 
     disableSort: {
+      type: Boolean,
+      default: () => false
+    },
+
+    disablePerPage: {
+      type: Boolean,
+      default: () => false
+    },
+
+    disablePagination: {
       type: Boolean,
       default: () => false
     },
@@ -136,7 +147,8 @@ export default {
     },
 
     getPageNumbers: function() {
-      return parseInt(this.sourceItems.length / this.perPage) + this.addPage
+      let pageCount = parseInt(this.sourceItems.length / this.perPage) + this.addPage
+      return pageCount > 1 ? pageCount : 0
     },
 
     sortOptions: function() {
@@ -196,6 +208,14 @@ export default {
       return this.sourceItems.slice().sort(compare).filter((item, key) => {
         return key >= this.perPage * this.getCurrentPage && key < this.getCurrentRange
       })
+    },
+
+    buttonsVisibility: function() {
+      return {
+        sort: !this.disableSort && this.sort.length,
+        perPage: !this.disablePerPage,
+        pagination: !this.disablePagination
+      }
     }
   }
 }

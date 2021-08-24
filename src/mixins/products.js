@@ -19,6 +19,9 @@ export default {
             allProducts: (state) => state.products.products,
             currentProduct(state) {
                 return state.products.products.find(el => el.id === parseInt(this.$route.params.id))
+            },
+            highlightProducts(state) {
+                return state.products.products.filter(el => el.highlight)
             }
         }),
 

@@ -1,7 +1,15 @@
 <template>
   <b-container>
     <b-row>
-      INDEX
+      <h1>
+        Wyróżnione produkty
+      </h1>
+    </b-row>
+    <b-row>
+      <BasePaginator
+          v-bind="{component, sortDefault, disablePerPage}"
+          v-bind:sourceItems="highlightProducts"
+      />
     </b-row>
     <b-row>
       <router-link v-bind:to="{name: 'products'}">
@@ -14,11 +22,22 @@
 <script>
 
 import BaseButton from "@/components/BaseButton"
+import BasePaginator from "@/components/BasePaginator";
+import products from "@/mixins/products";
 
 export default {
   name: "Index",
+  mixins: [products],
+  data() {
+    return {
+      component: "Product",
+      sortDefault: 'name-asc',
+      disablePerPage: true
+    }
+  },
   components: {
-    BaseButton
+    BaseButton,
+    BasePaginator
   }
 }
 </script>

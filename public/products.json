@@ -22,7 +22,8 @@
         "src": "/img/2.jpg",
         "alt": "Obrazek"
       },
-      "availableQuantity": 5
+      "availableQuantity": 5,
+      "highlight": true
     },
     {
       "id": 3,
@@ -46,7 +47,8 @@
         "src": "/img/4.jpg",
         "alt": "Obrazek"
       },
-      "availableQuantity": 5
+      "availableQuantity": 5,
+      "highlight": true
     },
     {
       "id": 5,
@@ -58,7 +60,8 @@
         "src": "/img/5.jpg",
         "alt": "Obrazek"
       },
-      "availableQuantity": 5
+      "availableQuantity": 5,
+      "highlight": true
     },
     {
       "id": 6,
