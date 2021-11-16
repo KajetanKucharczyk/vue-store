@@ -13,3 +13,7 @@ Vue.filter("formatPrice", (price, currency = "zł") => {
 
     return aString.split("").reverse().join('') + " " + currency
 })
+
+Vue.filter("formatQuantity", quantity => {
+    return quantity + " szt."
+})

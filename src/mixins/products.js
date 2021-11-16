@@ -17,6 +17,7 @@ export default {
     computed: {
         ...mapState({
             allProducts: (state) => state.products.products,
+            allProductsAvailable: (state) => state.products.products.filter(product => product.availableQuantity > 0),
             currentProduct(state) {
                 return state.products.products.find(el => el.id === parseInt(this.$route.params.id))
             },

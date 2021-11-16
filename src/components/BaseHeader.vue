@@ -7,14 +7,14 @@
       <slot name="siteName"></slot>
     </div>
 
-    <HeaderCart />
+<!--    <HeaderCart />-->
 
   </div>
 </template>
 
 <script>
 
-import HeaderCart from "@/components/HeaderCart";
+// import HeaderCart from "@/components/HeaderCart";
 
 import router from "@/mixins/router";
 
@@ -22,7 +22,7 @@ export default {
   name: "BaseHeader",
   mixins: [router],
   components: {
-    HeaderCart
+    // HeaderCart
   },
   props: {
     siteName: {

@@ -4,12 +4,12 @@
       <b-row class="product__header">
         <b-col
             cols="12"
-            md="4"
+            md="6"
         >
         </b-col>
         <b-col
             cols="12"
-            md="8"
+            md="6"
         >
           <h2>{{ currentProduct.name }}</h2>
         </b-col>
@@ -17,7 +17,7 @@
       <b-row>
         <b-col
             cols="12"
-            md="4"
+            md="6"
         >
           <div class="product__image-container">
             <img
@@ -35,17 +35,22 @@
         </b-col>
         <b-col
             cols="12"
-            md="8"
+            md="6"
         >
           <b-container>
-            <b-row class="product__short-desc">
-              <h4>
-                {{ currentProduct.shortDesc }}
-              </h4>
-            </b-row>
-            <b-row class="product__desc">
+<!--            <b-row class="product__short-desc">-->
+<!--              <h4>-->
+<!--                {{ currentProduct.shortDesc }}-->
+<!--              </h4>-->
+<!--            </b-row>-->
+<!--            <b-row class="product__desc">-->
+<!--              <p>-->
+<!--                {{ currentProduct.desc }}-->
+<!--              </p>-->
+<!--            </b-row>-->
+            <b-row class="product__quantity">
               <p>
-                {{ currentProduct.desc }}
+                {{ currentProduct.availableQuantity | formatQuantity }}
               </p>
             </b-row>
             <b-row class="product__price">
@@ -58,28 +63,28 @@
       </b-row>
     </b-container>
 
-    <BaseButton
-        v-bind:clickFunction="() => addtoCart(currentProduct.id)"
-        v-bind:updateVisible="canAddProductToCart"
-    >
+<!--    <BaseButton-->
+<!--        v-bind:clickFunction="() => addtoCart(currentProduct.id)"-->
+<!--        v-bind:updateVisible="canAddProductToCart"-->
+<!--    >-->
 
-      <span v-if="() => countPieces(2)">
-        Ostatnie sztuki (zostało {{countAvailableItems}})
-      </span>
+<!--      <span v-if="() => countPieces(2)">-->
+<!--        Ostatnie sztuki (zostało {{countAvailableItems}})-->
+<!--      </span>-->
 
-      <span v-else-if="() => countPieces(1)">
-        Ostatnia sztuka
-      </span>
+<!--      <span v-else-if="() => countPieces(1)">-->
+<!--        Ostatnia sztuka-->
+<!--      </span>-->
 
-      <span v-else-if="() => countPieces(0)">
-        Brak wystarczającej ilośći produktów na stanie
-      </span>
+<!--      <span v-else-if="() => countPieces(0)">-->
+<!--        Brak wystarczającej ilośći produktów na stanie-->
+<!--      </span>-->
 
-      <span v-else>
-        Dodaj do koszyka (zostało {{countAvailableItems}})
-      </span>
+<!--      <span v-else>-->
+<!--        Dodaj do koszyka (zostało {{countAvailableItems}})-->
+<!--      </span>-->
 
-    </BaseButton>
+<!--    </BaseButton>-->
 
   </div>
 </template>
@@ -142,14 +147,31 @@ export default {
   &__desc {
 
   }
-  &__price {
+  &__quantity, &__price {
     margin: 50px 0px;
     padding: 0px;
     font-size: 1.5rem;
+    position: relative;
 
     p {
       padding: 0px;
       margin: 0px;
+    }
+
+    &:after {
+      position: absolute;
+      top: -12px;
+      font-size: 12px;
+    }
+  }
+  &__price {
+    &:after {
+      content: 'Cena:';
+    }
+  }
+  &__quantity {
+    &:after {
+      content: 'Dostepna ilość:';
     }
   }
 }

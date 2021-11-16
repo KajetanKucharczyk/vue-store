@@ -33,10 +33,15 @@
                 </h2>
               </b-col>
             </b-row>
-            <b-row>
-              <h4>
-                {{data.shortDesc | shortenDesc(this.previewDescWordCount)}}
-              </h4>
+<!--            <b-row>-->
+<!--              <h4>-->
+<!--                {{data.shortDesc | shortenDesc(this.previewDescWordCount)}}-->
+<!--              </h4>-->
+<!--            </b-row>-->
+            <b-row class="product__quantity">
+              <p>
+                {{ data.availableQuantity | formatQuantity }}
+              </p>
             </b-row>
             <b-row class="product__price">
               <p>
@@ -101,14 +106,31 @@ export default {
     top: 100px;
     margin: 10px 0px;
   }
-  &__price {
+  &__quantity, &__price {
     margin: 50px 0px;
     padding: 0px;
     font-size: 1.5rem;
+    position: relative;
 
     p {
       padding: 0px;
       margin: 0px;
+    }
+
+    &:after {
+      position: absolute;
+      top: -12px;
+      font-size: 12px;
+    }
+  }
+  &__price {
+    &:after {
+      content: 'Cena:';
+    }
+  }
+  &__quantity {
+    &:after {
+      content: 'Dostepna ilość:';
     }
   }
 }
