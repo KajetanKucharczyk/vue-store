@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import BasePaginator from "@/components/BasePaginator";
+import BasePaginator from "@/components/base/BasePaginator";
 
 import products from "@/mixins/products";
 

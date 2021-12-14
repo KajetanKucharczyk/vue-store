@@ -1,13 +1,14 @@
 <template>
   <router-link
       class="product border-radius custom-shadow color-dark"
+      v-bind:class="{'product--show': this.show}"
       v-bind:to="{
-        name: 'product',
-        params: {
-          id: data.id,
-          route: 'products-details'
-        }
-      }"
+      name: 'product',
+      params: {
+        id: data.id,
+        route: 'products-details'
+      }
+    }"
   >
     <b-container>
       <b-row>
@@ -66,7 +67,8 @@ export default {
   },
   data() {
     return {
-      previewDescWordCount: 25
+      previewDescWordCount: 25,
+      show: false
     }
   },
   filters: {
@@ -80,6 +82,11 @@ export default {
       return shortDesc.split('').length <= newWord ? shortDesc : newWord.trimEnd() + "..."
     }
   },
+  created() {
+    setTimeout(function() {
+      this.show = true
+    }.bind(this), (this.data.key + 1) * 250)
+  }
 }
 </script>
 
@@ -88,9 +95,14 @@ export default {
   position: relative;
   margin: 20px;
   border: 1px solid $dark-color;
-  transition: 0.2s transform ease-in-out, 0.2s box-shadow ease-in-out;
+  transition: 0.2s all ease-in-out;
   cursor: pointer;
   text-decoration: none;
+  opacity: 0;
+
+  &--show {
+    opacity: 1;
+  }
 
   &:hover {
     transform: translate(-2px, -2px);

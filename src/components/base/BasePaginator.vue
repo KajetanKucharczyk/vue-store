@@ -200,9 +200,16 @@ export default {
         }
       })
 
-      return this.sourceItems.slice().sort(compare).filter((item, key) => {
+      let filteredItems = this.sourceItems.slice().sort(compare).filter((item, key) => {
         return key >= this.perPage * this.getCurrentPage && key < this.getCurrentRange
       })
+
+      filteredItems = filteredItems.map((el, key) => {
+        el.key = key
+        return el
+      })
+
+      return filteredItems
     },
 
     buttonsVisibility: function() {

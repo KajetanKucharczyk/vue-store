@@ -21,8 +21,8 @@
 
 <script>
 
-import BaseButton from "@/components/BaseButton"
-import BasePaginator from "@/components/BasePaginator";
+import BaseButton from "@/components/base/BaseButton"
+import BasePaginator from "@/components/base/BasePaginator";
 import products from "@/mixins/products";
 
 export default {

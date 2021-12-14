@@ -91,7 +91,7 @@
 
 <script>
 
-import BaseButton from "@/components/BaseButton";
+import BaseButton from "@/components/base/BaseButton";
 
 import router from "@/mixins/router";
 import products from "@/mixins/products";

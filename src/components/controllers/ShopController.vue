@@ -1,29 +1,18 @@
 <template>
   <div id="app">
-
-    <main>
-      <BaseHeader>
-        <template v-slot:siteName>
-          {{siteName}}
-        </template>
-      </BaseHeader>
-    </main>
-
-    <main>
-        <component v-bind:is="routeComponent.component" v-bind="routeComponent.params"></component>
-    </main>
-
-    <footer>
-      <BaseFooter />
-    </footer>
-
+    <BaseLayout>
+      <template v-slot:content>
+        <main>
+          <component v-bind:is="routeComponent.component" v-bind="routeComponent.params"></component>
+        </main>
+      </template>
+    </BaseLayout>
   </div>
 </template>
 
 <script>
 
-import BaseHeader from '@/components/BaseHeader.vue'
-import BaseFooter from "@/components/BaseFooter"
+import BaseLayout from '@/components/base/BaseLayout.vue'
 
 const ProductDetails  = () => import("@/components/ProductDetails")
 const Cart            = () => import("@/components/Cart")
@@ -35,15 +24,7 @@ const Error           = () => import("@/components/Error")
 export default {
   name: 'ShopController',
   components: {
-    BaseHeader,
-    BaseFooter,
-  },
-  data () {
-    return {
-      siteName: "SKLEPik",
-      cart: [],
-      products: {}
-    }
+    BaseLayout,
   },
   props: {
     route: {

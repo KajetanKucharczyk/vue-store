@@ -4,15 +4,18 @@ export default {
     methods: {
         getProducts() {
             if(window.localStorage.getItem('products'))
-                this.$store.commit('GET_PRODUCTS', JSON.parse(window.localStorage.getItem('products')))
+                this.saveProducts(JSON.parse(window.localStorage.getItem('products')))
             else
                 fetch("./products.json")
                     .then(response => response.json())
                     .then(data => {
                         localStorage.setItem('products', JSON.stringify(data.products))
-                        this.$store.commit('GET_PRODUCTS', data.products)
+                        this.saveProducts(data.products)
                     })
         },
+        saveProducts(products) {
+            this.$store.commit('GET_PRODUCTS', products)
+        }
     },
     computed: {
         ...mapState({

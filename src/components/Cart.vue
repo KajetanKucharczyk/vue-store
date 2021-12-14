@@ -111,7 +111,7 @@
 
 <script>
 
-import Button from "@/components/BaseButton";
+import Button from "@/components/base/BaseButton";
 
 import products from "@/mixins/products";
 import cart from "@/mixins/cart";
